@@ -1,0 +1,276 @@
+<div class="card shadow-sm animate__animated animate__fadeInTopLeft">
+  <div
+    class="card-header bg-primary bg-gradient text-white"
+  >
+    PARAMETROS DE HISTORIA
+  </div>
+  <div class="card-body">
+    <mat-accordion class="example-headers-align">
+      <mat-expansion-panel
+        hideToggle
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title> Estado Ingreso </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <form [formGroup]="formEstadoIngreso" class="row justify-content-center align-items-center">
+          <mat-form-field appearance="outline" class="col-lg-8">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Escribir..." formControlName="nombre" required/>
+            <mat-icon matSuffix>quiz</mat-icon>
+            <mat-error *ngIf="this.formControlEstadoIngreso().nombre.hasError('required')">Campo nombre es requerido.</mat-error>
+          </mat-form-field>
+  
+          <div class="col-lg-4" *ngIf="_btn_ingreso.botones.btnActualizar">
+            <mat-checkbox formControlName="estado">{{this.formControlEstadoIngreso().estado.value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
+          </div>
+        </form>
+
+        <div class="contenedor-tabla" *ngIf="dataSourceEstadoIngreso.data.length > 0">
+          <div class="card shadow-sm ">
+            <table mat-table [dataSource]="dataSourceEstadoIngreso">
+              <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+              </ng-container>
+              <ng-container matColumnDef="seleccionar">
+                <th mat-header-cell *matHeaderCellDef>Editar</th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button color="primary" (click)="setEditarParametro(element, 'estado-ingreso')">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+        
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [length]="dataSourceEstadoIngreso.data.length" [pageSize]="4" [pageSizeOptions]="[3]" hidePageSize>
+            </mat-paginator>
+          </div>
+      </div>
+
+        <mat-action-row>
+          <div class="btn-group">
+            <button
+              mat-mini-fab
+              color="primary"
+              matTooltip="Listar registros"
+              matTooltipPosition="above"
+              (click)="getListadoEstadoIngreso()"
+            >
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              color="primary"
+              matTooltip="Guardar información"
+              matTooltipPosition="above"
+              *ngIf="this._btn_ingreso.botones.btnGuardar"
+              (click)="postEstadoIngresos()"
+            >
+              <mat-icon>save</mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              color="primary"
+              matTooltip="Actualizar registro"
+              matTooltipPosition="above"
+              *ngIf="this._btn_ingreso.botones.btnActualizar"
+              (click)="putEstadoIngresos()"
+            >
+              <mat-icon>update</mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              color="warn"
+              matTooltip="Limpiar vista"
+              matTooltipPosition="above"
+              (click)="limpiarVista('estado-ingreso')"
+            >
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel
+       
+        hideToggle
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title> Signos Vitales Y Medidas Antropometricas </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <form [formGroup]="formExamenFisico" class="row justify-content-center align-items-center">
+          <mat-form-field appearance="outline" class="col-lg-8">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Escribir..." formControlName="nombre" required/>
+            <mat-icon matSuffix>quiz</mat-icon>
+            <mat-error *ngIf="this.formControlExamenFisico().nombre.hasError('required')">Campo nombre es requerido.</mat-error>
+          </mat-form-field>
+  
+          <div class="col-lg-4" *ngIf="_btn_fisico.botones.btnActualizar">
+            <mat-checkbox formControlName="estado">{{this.formControlExamenFisico().estado.value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
+          </div>
+        </form>
+
+        <div class="contenedor-tabla" *ngIf="dataSourceExamenFisico.data.length > 0">
+          <div class="card shadow-sm ">
+            <table mat-table [dataSource]="dataSourceExamenFisico">
+              <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+              </ng-container>
+              <ng-container matColumnDef="seleccionar">
+                <th mat-header-cell *matHeaderCellDef>Editar</th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button color="primary" (click)="setEditarParametro(element, 'examen-fisico')">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+        
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [length]="dataSourceExamenFisico.data.length" [pageSize]="4" [pageSizeOptions]="[3]" hidePageSize>
+            </mat-paginator>
+          </div>
+      </div>
+
+        <mat-action-row>
+          <div class="btn-group">
+            <button
+              mat-mini-fab
+              color="primary"
+              matTooltip="Listar registros"
+              matTooltipPosition="above"
+              (click)="getListadoExamenFisico()"
+            >
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              color="primary"
+              matTooltip="Guardar información"
+              matTooltipPosition="above"
+              *ngIf="this._btn_fisico.botones.btnGuardar"
+              (click)="postExamenFisico()"
+            >
+              <mat-icon>save</mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              color="primary"
+              matTooltip="Actualizar registro"
+              matTooltipPosition="above"
+              *ngIf="this._btn_fisico.botones.btnActualizar"
+              (click)="putExamenFisico()"
+            >
+              <mat-icon>update</mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              color="warn"
+              matTooltip="Limpiar vista"
+              matTooltipPosition="above"
+              (click)="limpiarVista('examen-fisico')"
+            >
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
+        </mat-action-row>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel
+        
+        hideToggle
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title> Antecedentes Patológicos </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <form [formGroup]="formAntecedentes" class="row justify-content-center align-items-center">
+          <mat-form-field appearance="outline" class="col-lg-8">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Escribir..." formControlName="nombre" required/>
+            <mat-icon matSuffix>quiz</mat-icon>
+            <mat-error *ngIf="this.formControlAntecedentes().nombre.hasError('required')">Campo nombre es requerido.</mat-error>
+          </mat-form-field>
+  
+          <div class="col-lg-4" *ngIf="_btn_antecedente.botones.btnActualizar">
+            <mat-checkbox formControlName="estado">{{this.formControlAntecedentes().estado.value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
+          </div>
+        </form>
+        
+        <div class="contenedor-tabla" *ngIf="dataSourceAntecedentes.data.length > 0">
+          <div class="card shadow-sm ">
+            <table mat-table [dataSource]="dataSourceAntecedentes">
+              <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+              </ng-container>
+              <ng-container matColumnDef="seleccionar">
+                <th mat-header-cell *matHeaderCellDef>Editar</th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button color="primary" (click)="setEditarParametro(element, 'antecedentes')">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+        
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator [length]="dataSourceAntecedentes.data.length" >
+            </mat-paginator>
+          </div>
+      </div>
+
+        <mat-action-row>
+          <div class="btn-group">
+            <button
+              mat-mini-fab
+              color="primary"
+              matTooltip="Listar registros"
+              matTooltipPosition="above"
+              (click)="getListadoAntecedentes()"
+            >
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              color="primary"
+              matTooltip="Guardar información"
+              matTooltipPosition="above"
+              *ngIf="this._btn_antecedente.botones.btnGuardar"
+              (click)="postAntecedentes()"
+            >
+              <mat-icon>save</mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              color="primary"
+              matTooltip="Actualizar registro"
+              matTooltipPosition="above"
+              *ngIf="this._btn_antecedente.botones.btnActualizar"
+              (click)="putAntecedentes()"
+            >
+              <mat-icon>update</mat-icon>
+            </button>
+            <button
+              mat-mini-fab
+              color="warn"
+              matTooltip="Limpiar vista"
+              matTooltipPosition="above"
+              (click)="limpiarVista('antecedentes')"
+            >
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

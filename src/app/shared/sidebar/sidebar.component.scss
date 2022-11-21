@@ -1,0 +1,33 @@
+.nav {
+  li {
+    a {
+      color: rgba(255, 255, 255, 0.507);
+      margin: 5px 15px;
+      border-radius: 30px;
+      display: flex;
+      text-decoration: none;
+      position: relative;
+      text-transform: capitalize;
+      cursor: pointer;
+      font-size: small;
+      padding: 10px;
+      line-height: 2;
+      .material-icons {
+        margin-right: 5px;
+      }
+    }
+    &:hover:not(.active) > a,
+    &:focus:not(.active) > a {
+      background-color: rgba(255, 255, 255, 0.199);
+      box-shadow:  0 .5rem 1rem rgba(#000000, .15);
+      color: #fff;
+    }
+    }
+}
+.active {
+  a {
+    color: #4db6ac !important;
+    background-color: #fff;
+    box-shadow: 0 0.5rem 1rem rgba(#000000, 0.15);
+  }
+}

@@ -1,0 +1,110 @@
+<div class="card shadow-sm animate__animated animate__fadeInTopLeft">
+    <div
+      class=" card-header bg-primary bg-gradient 
+      text-white  d-flex
+      justify-content-between
+      align-items-center"
+    >
+      HISTORIA CLINICA
+      <p *ngIf="consecutivo" class="m-0">CONSECUTIVO: {{consecutivo}}</p>
+    </div>
+      <div class="card-body">
+        <form [formGroup]="formulario" class="row align-items-center">
+          <div class="col-lg-12 ">
+            <div class="d-flex align-items-end">
+              <mat-icon color="primary">play_arrow</mat-icon>Datos personales del paciente
+            </div>
+            <hr>
+          </div>
+          <mat-form-field appearance="outline" class="col-lg-6">
+            <mat-label>Nombre del Paciente</mat-label>
+            <input matInput placeholder="Buscar..." formControlName="nombre_paciente" readonly required (click)="modalPacientes()" />
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-error *ngIf="this.formControl()['asistencial_paciente_id'].hasError('required')">Campo paciente es requerido.</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-lg-3">
+            <mat-label>Numero de Identificación</mat-label>
+            <input
+              matInput
+              placeholder="Escribir..."
+              formControlName="numero_identificacion"
+            />
+            <mat-icon matSuffix>numbers</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-lg-3">
+            <mat-label>Fecha de Nacimiento</mat-label>
+            <input matInput placeholder="Escribir..." formControlName="fecha_nacimiento" readonly/>
+            <mat-icon matSuffix>date_range</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-lg-3">
+            <mat-label>Residencia Actual</mat-label>
+            <input matInput placeholder="Escribir..." formControlName="residencia_actual"/>
+            <mat-icon matSuffix>fmd_good</mat-icon>
+          </mat-form-field>
+        
+          <mat-form-field appearance="outline" class="col-lg-3">
+            <mat-label>Telefono</mat-label>
+            <input matInput placeholder="Escribir..." formControlName="telefono"/>
+            <mat-icon matSuffix>phone</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-lg-3">
+            <mat-label>Sexo</mat-label>
+            <input matInput placeholder="Escribir..." formControlName="sexo" readonly/>
+            <mat-icon matSuffix>tag_faces</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-lg-3">
+            <mat-label>Edad</mat-label>
+            <input matInput placeholder="Escribir..." formControlName="edad" readonly/>
+            <mat-icon matSuffix>pin</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-lg-3">
+            <mat-label>Convenio</mat-label>
+            <mat-select formControlName="asistencial_convenio_id" required>
+              <mat-option value="" selected disabled>Seleccionar</mat-option>
+              <mat-option
+                [value]="convenio.id"
+                *ngFor="let convenio of listadoConvenios"
+                >{{ convenio.nombre }}</mat-option
+              >
+            </mat-select>
+            <mat-error
+              *ngIf="this.formControl()['asistencial_convenio_id'].hasError('required')"
+              >Campo convenio es requerido.</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-lg-3">
+            <mat-label>Regimen</mat-label>
+            <mat-select formControlName="asistencial_regimen_id" required>
+              <mat-option value="" selected disabled>Seleccionar</mat-option>
+              <mat-option
+                [value]="regimen.id"
+                *ngFor="let regimen of listadoRegimenes"
+                >{{ regimen.nombre }}</mat-option
+              >
+            </mat-select>
+            <mat-error
+              *ngIf="this.formControl()['asistencial_regimen_id'].hasError('required')"
+              >Campo regimen es requerido.</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-lg-6">
+            <mat-label>Antecedentes Familiares</mat-label>
+            <input matInput placeholder="Escribir..." formControlName="antecedentes_normales" required/>
+            <mat-icon matSuffix>quiz</mat-icon>
+            <mat-error *ngIf="this.formControl()['antecedentes_normales'].hasError('required')">Campo antecedentes familiares es requerido.</mat-error>
+          </mat-form-field>         
+      </form>
+      <div class="d-block d-md-flex justify-content-between gap-4">
+        <button mat-raised-button color="primary" class="w-100 mb-3 mb-md-0" type="button" [disabled]="!this.id_historia" (click)="modalEvolucion()">GENERAR EVOLUCIÓN</button>
+        <button mat-raised-button color="primary" class="w-100" type="button" (click)="postHistoriaClinica()">GUARDAR HISTORIA CLINICA</button>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,158 @@
+<div class="card shadow-sm animate__animated animate__fadeIn mt-4">
+  <div
+    class="card-header bg-primary bg-gradient text-white d-flex justify-content-between align-items-center"
+  >
+    ACTUALIZAR CENTRO MEDICO
+    <div class="btn-group">
+      <button
+        mat-mini-fab
+        color="primary"
+        (click)="putCentroMedico()"
+        matTooltip="Actualizar registro"
+        matTooltipPosition="above"
+        
+      >
+        <mat-icon>update</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="container mt-3">
+      <div class="row">
+        <div class="col-lg-7 order-2 order-lg-1">
+          <form [formGroup]="formulario" class="row align-items-center">
+            <mat-form-field appearance="outline" class="col-lg-6">
+              <mat-label>Tipo de Documento</mat-label>
+              <mat-select formControlName="utilidad_tipo_identificacion_id">
+                <mat-option value="" selected disabled>Seleccionar</mat-option>
+                <mat-option
+                  [value]="tipo_identificacion.id"
+                  *ngFor="let tipo_identificacion of listadoTipoIdentificacion"
+                  >{{ tipo_identificacion.nombre }}</mat-option
+                >
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  this.formControl().utilidad_tipo_identificacion_id.hasError(
+                    'required'
+                  )
+                "
+                >Campo tipo de doc. es requerido.</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-lg-6">
+              <mat-label>Numero de Identificación</mat-label>
+              <input
+                matInput
+                placeholder="Escribir..."
+                formControlName="identificacion"
+              />
+              <mat-icon matSuffix>numbers</mat-icon>
+              <mat-error
+                *ngIf="this.formControl().identificacion.hasError('required')"
+                >Campo numero de ident. es requerido.</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-lg-12">
+              <mat-label>Nombre del Centro Médico</mat-label>
+              <input
+                matInput
+                placeholder="Escribir..."
+                formControlName="razon_social"
+                required
+              />
+              <mat-icon matSuffix>local_hospital</mat-icon>
+              <mat-error *ngIf="this.formControl().razon_social.hasError('required')"
+                >Campo centro médico es requerido.</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-lg-12">
+              <mat-label>Descripción</mat-label>
+              <input
+                matInput maxlength="200" matTooltip="Maximo 200 caracteres"
+                placeholder="Escribir..."
+                formControlName="descripcion"
+                required
+              />
+              <mat-icon matSuffix>comment</mat-icon>
+              <mat-error *ngIf="this.formControl().descripcion.hasError('required')"
+                >Campo descripción es requerido.</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-lg-6">
+              <mat-label>Teléfono</mat-label>
+              <input
+                matInput
+                placeholder="Escribir..."
+                formControlName="telefono"
+                required
+              />
+              <mat-icon matSuffix>phone</mat-icon>
+              <mat-error *ngIf="this.formControl().telefono.hasError('required')"
+                >Campo teléfono es requerido.</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-lg-6">
+              <mat-label>Dirección</mat-label>
+              <input
+                matInput
+                placeholder="Escribir..."
+                formControlName="direccion"
+                required
+              />
+              <mat-icon matSuffix>fmd_good</mat-icon>
+              <mat-error *ngIf="this.formControl().direccion.hasError('required')"
+                >Campo dirección es requerido.</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-lg-4">
+              <mat-label>Departamento</mat-label>
+              <mat-select formControlName="utilidad_departamento_id" required>
+                <mat-option
+                  [value]="item.id"
+                  *ngFor="let item of listadoDepartamentos"
+                  >{{ item.nombre }}</mat-option
+                >
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  this.formControl().utilidad_departamento_id.hasError('required')
+                "
+                >Campo departamento es requerido.</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="col-lg-4">
+              <mat-label>Ciudad</mat-label>
+              <mat-select formControlName="utilidad_ciudad_id" required>
+                <mat-option [value]="item.id" *ngFor="let item of listadoCiudades">{{
+                  item.nombre
+                }}</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="this.formControl().utilidad_ciudad_id.hasError('required')"
+                >Campo ciudad es requerido.</mat-error
+              >
+            </mat-form-field>
+            <div class="col-lg-4">
+              <mat-checkbox formControlName="estado">{{
+                this.formControl().estado.value
+                  ? "Deshabilitar registro"
+                  : " Registro habilitado"
+              }}</mat-checkbox>
+            </div>
+          </form>
+        </div>
+        <div class="col-lg-5 col-md-5 d-none d-lg-block">
+          <img
+            src="../../../../assets/images/img-crear-centro-medico.svg"
+            alt=""
+            class="img-fluid  m-auto"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

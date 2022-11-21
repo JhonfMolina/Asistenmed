@@ -1,0 +1,68 @@
+
+<div class="card shadow-sm animate__animated animate__fadeIn">
+    <div
+      class=" card-header bg-primary bg-gradient 
+      text-white  d-flex
+      justify-content-between
+      align-items-center"
+    >
+      CONSULTAR HISTORIA CLINICA
+      <div class="btn-group">
+        <button
+          mat-mini-fab
+          color="primary"
+          (click)="imprimirPdf()"
+          matTooltip="Imprimir Historia"
+          matTooltipPosition="above"
+         [disabled]="!this.formControl()['consecutivo'].value"
+        >
+          <mat-icon>print</mat-icon>
+        </button>
+        <button mat-mini-fab color="warn" 
+        (click)="limpiarVista()" 
+        matTooltip="Limpiar vista" 
+        matTooltipPosition="above"
+      >
+        <mat-icon>clear</mat-icon>
+      </button>
+      </div>
+    </div>
+    <div class="card-body py-3">
+        <form [formGroup]="formulario">
+
+            <div class="row justify-content-center align-items-center">
+      
+              <mat-form-field appearance="outline" class="col-lg-6">
+                <mat-label>Nombre del Paciente</mat-label>
+                <input matInput placeholder="Buscar..." formControlName="asistencial_paciente" readonly required (click)="modalPacientes()" />
+                <mat-icon matSuffix>person</mat-icon>
+                <mat-error *ngIf="this.formControl()['asistencial_paciente_id'].hasError('asistencial_paciente')">Campo paciente es requerido.</mat-error>
+              </mat-form-field>
+      
+              <mat-form-field appearance="outline" class="col-lg-3">
+                <mat-label>Consecutivo</mat-label>
+                <mat-select formControlName="consecutivo" >
+                  <mat-option value="" selected disabled>Seleccionar</mat-option>
+                  <mat-option [value]="consecutivo.id" *ngFor="let consecutivo of listadoConsecutivosHistoria"
+                  >{{consecutivo.consecutivo}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="this.formControl()['consecutivo'].hasError('required')">
+                  Campo consecutivo es requerido.</mat-error>
+              </mat-form-field>
+      
+            </div>
+
+        </form>
+    </div>
+    <div class="row justify-content-center" *ngIf="this.formControl()['consecutivo'].value">
+        <div class="col-md-10">
+            <div class="card mb-3">
+                <pdf-viewer [src]="pdfSrc"
+                    [render-text]="true"
+                    [original-size]="false"
+                    style="height: 500px"
+                ></pdf-viewer>
+            </div>
+        </div>
+    </div>
+</div>

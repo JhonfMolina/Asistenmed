@@ -1,0 +1,89 @@
+<div class="card shadow-sm animate__animated animate__fadeIn mt-4">
+  <div
+    class="
+      card-header
+      bg-primary bg-gradient
+      text-white
+      d-flex
+      justify-content-between
+      align-items-center
+    "
+  >
+  PARAMETROS GENERALES
+  <div class="btn-group">
+    <button
+      mat-mini-fab
+      color="primary"
+      (click)="postCentroMedicoParametro()"
+      matTooltip="Guardar información"
+      matTooltipPosition="above"
+      *ngIf="this._botones.botones.btnGuardar"
+    >
+      <mat-icon>save</mat-icon>
+    </button>
+    <button
+      mat-mini-fab
+      color="primary"
+      (click)="putCentroMedicoParametro()"
+      matTooltip="Actualizar registro"
+      matTooltipPosition="above"
+      *ngIf="this._botones.botones.btnActualizar"
+    >
+      <mat-icon>update</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="card-body">
+    <div class="container mt-3">
+      <form [formGroup]="formulario" class="row align-items-center">
+       
+        <mat-form-field appearance="outline" class="col-lg-4">
+          <mat-label>Tipo Documento de Historia Clinica</mat-label>
+          <mat-select formControlName="asistencial_tipo_documento_historia_id">
+            <mat-option value="" selected disabled>Seleccionar</mat-option>
+            <mat-option [value]="tipo.id" *ngFor="let tipo of listadoTipoDocumento">{{tipo.nombre}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="this.formControl().asistencial_tipo_documento_historia_id.hasError('required')">Campo tipo documento historia clinica es requerido.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-lg-4">
+          <mat-label>Tipo Documento de Medicamentos</mat-label>
+          <mat-select formControlName="asistencial_tipo_documento_medicamento_id">
+            <mat-option value="" selected disabled>Seleccionar</mat-option>
+            <mat-option [value]="tipo.id" *ngFor="let tipo of listadoTipoDocumento">{{tipo.nombre}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="this.formControl().asistencial_tipo_documento_medicamento_id.hasError('required')">Campo tipo documento medicamentos es requerido.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-lg-4">
+          <mat-label>Tipo Documento de Imagenologia</mat-label>
+          <mat-select formControlName="asistencial_tipo_documento_imagenologia_id">
+            <mat-option value="" selected disabled>Seleccionar</mat-option>
+            <mat-option [value]="tipo.id" *ngFor="let tipo of listadoTipoDocumento">{{tipo.nombre}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-lg-4">
+          <mat-label>Tipo Documento de Laboratorio</mat-label>
+          <mat-select formControlName="asistencial_tipo_documento_laboratorio_id">
+            <mat-option value="" selected disabled>Seleccionar</mat-option>
+            <mat-option [value]="tipo.id" *ngFor="let tipo of listadoTipoDocumento">{{tipo.nombre}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-lg-4">
+          <mat-label>Duración de la consulta</mat-label>
+          <mat-select formControlName="duracion_cita">
+            <mat-option value="" selected disabled>Seleccionar</mat-option>
+            <mat-option [value]="minutos" *ngFor="let minutos of minutosAtencion">{{minutos}} Minutos</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="col-lg-4" *ngIf="_botones.botones.btnActualizar">
+          <mat-checkbox formControlName="estado">{{this.formControl().estado.value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
+        </div>
+      </form>
+    </div>
+</div>
+

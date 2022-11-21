@@ -1,0 +1,26 @@
+
+<div class="accordion" id="accordionPanelsStayOpenExample">
+  <div  *ngFor="let menu of menuPrincipal">
+    <h4 class="accordion-header " id="panelsStayOpen-headingOne">
+      <a matRipple  class="d-flex text-white text-u p-2 w-100 " type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#tab_' + menu.marker"  aria-controls="panelsStayOpen-collapseOne" aria-expanded="false">
+        <span class="material-icons">chevron_right</span> {{menu.title}}
+      </a>
+    </h4>
+    <div id="tab_{{menu.marker}}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingOne">
+      <div class="accordion-body p-0">
+        <ul class="nav flex-column">
+          <li
+            routerLinkActive="active"
+            *ngFor="let menuItem of menu.menuItems"
+            class="nav-item "
+          >
+            <a [routerLink]="[menuItem.path]">
+              <span class="material-icons">{{ menuItem.icon }}</span>
+              {{ menuItem.title}}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="row">  
+  <div class="col-lg-7 mt-5 order-2 order-lg-1">
+    <form [formGroup]="formulario" class="row align-items-center">
+      <mat-form-field appearance="outline" class="col-lg-6">
+        <mat-label>Tipo de Documento</mat-label>
+        <mat-select formControlName="utilidad_tipo_identificacion_id">
+          <mat-option value="" selected disabled>Seleccionar</mat-option>
+          <mat-option
+            [value]="tipo_identificacion.id"
+            *ngFor="let tipo_identificacion of listadoTipoIdentificacion"
+            >{{ tipo_identificacion.nombre }}</mat-option
+          >
+        </mat-select>
+        <mat-error
+          *ngIf="this.formControl().utilidad_tipo_identificacion_id.hasError('required')"
+          >Campo tipo de doc. es requerido.</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-lg-6">
+        <mat-label>Numero de Identificación</mat-label>
+        <input
+          matInput
+          placeholder="Escribir..."
+          formControlName="identificacion"
+        />
+        <mat-icon matSuffix>numbers</mat-icon>
+        <mat-error
+          *ngIf="this.formControl().identificacion.hasError('required')"
+          >Campo numero de ident. es requerido.</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-lg-12">
+        <mat-label>Nombre del Centro Médico</mat-label>
+        <input matInput placeholder="Escribir..." formControlName="razon_social" required/>
+        <mat-icon matSuffix>local_hospital</mat-icon>
+        <mat-error *ngIf="this.formControl().razon_social.hasError('required')">Campo centro médico es requerido.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-lg-12">
+        <mat-label>Descripción</mat-label>
+        <input matInput maxlength="200" matTooltip="Maximo 200 caracteres" placeholder="Escribir..." formControlName="descripcion" required/>
+        <mat-icon matSuffix>comment</mat-icon>
+        <mat-error *ngIf="this.formControl().descripcion.hasError('required')">Campo descripción es requerido.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-lg-3">
+        <mat-label>Teléfono</mat-label>
+        <input matInput placeholder="Escribir..." formControlName="telefonos" required/>
+        <mat-icon matSuffix>phone</mat-icon>
+        <mat-error *ngIf="this.formControl().telefonos.hasError('required')">Campo teléfono es requerido.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-lg-3">
+        <mat-label>Dirección</mat-label>
+        <input matInput placeholder="Escribir..." formControlName="direccion" required/>
+        <mat-icon matSuffix>fmd_good</mat-icon>
+        <mat-error *ngIf="this.formControl().direccion.hasError('required')">Campo dirección es requerido.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-lg-3">
+        <mat-label>Departamento</mat-label>
+        <mat-select formControlName="utilidad_departamento_id" required>
+          <mat-option [value]="item.id" *ngFor="let item of listadoDepartamentos">{{item.nombre}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="this.formControl().utilidad_departamento_id.hasError('required')">Campo departamento es requerido.</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="col-lg-3">
+        <mat-label>Ciudad</mat-label>
+        <mat-select formControlName="utilidad_ciudad_id" required>
+          <mat-option [value]="item.id" *ngFor="let item of listadoCiudades">{{item.nombre}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="this.formControl().utilidad_ciudad_id.hasError('required')">Campo ciudad es requerido.</mat-error>
+      </mat-form-field>
+      
+      <div class="col-lg-12 mt-3">
+        <button type="button" mat-stroked-button color="primary" class="w-100" (click)="postCentroMedico()"  matTooltip="Crear Centro Medico"  matTooltipPosition="above">
+          <mat-icon>save</mat-icon>GUARDAR INFORMACIÓN
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="col-lg-5 col-md-5 order-1 order-lg-2">
+    <h1 class="h1 text-primary text-uppercase text-end">aqui puedes crear tu centro medico</h1>
+    <hr class="dropdown-divider">
+    <img src="../../../../assets/images/img-crear-centro-medico.svg" alt="" class="img-fluid d-block m-auto">
+</div>
+</div>

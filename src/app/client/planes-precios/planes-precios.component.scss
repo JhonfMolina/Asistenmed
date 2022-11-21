@@ -1,0 +1,10 @@
+.banner {
+    position: relative;
+    background: linear-gradient(
+            90deg,
+            rgba(11, 85, 84, 0.507),
+            rgba(4, 94, 92, 0.75)
+        ),
+        url(../../../assets/images/img-banner-home.svg) no-repeat fixed;
+    background-size: cover;
+}

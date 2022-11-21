@@ -1,0 +1,152 @@
+<div class="card shadow-sm animate__animated animate__fadeInTopLeft">
+  <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+    {{tipoOrdenMedica.nombre}}
+    <div class="btn-group">
+      <button mat-mini-fab color="primary" 
+        (click)="postOrdenMedica()" 
+        matTooltip="Guardar información"
+        matTooltipPosition="above" 
+        *ngIf="this._botones.botones.btnGuardar"
+      >
+        <mat-icon>save</mat-icon>
+      </button>
+      <button mat-mini-fab color="warn" 
+        (click)="limpiarVista()" 
+        matTooltip="Limpiar vista" 
+        matTooltipPosition="above"
+      >
+        <mat-icon>clear</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="card-body">
+
+    <form [formGroup]="formulario">
+
+      <div class="row align-items-center">
+
+        <mat-form-field appearance="outline" class="col-lg-6">
+          <mat-label>Nombre del Paciente</mat-label>
+          <input matInput placeholder="Buscar..." formControlName="asistencial_paciente" readonly required (click)="modalPacientes()" />
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="this.formControl()['asistencial_paciente_id'].hasError('asistencial_paciente')">Campo paciente es requerido.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-lg-3">
+          <mat-label>Consecutivo</mat-label>
+          <mat-select formControlName="consecutivo" >
+            <mat-option value="" selected disabled>Seleccionar</mat-option>
+            <mat-option [value]="consecutivo.id" *ngFor="let consecutivo of listadoConsecutivosHistoria"
+            >{{consecutivo.consecutivo}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="this.formControl()['consecutivo'].hasError('required')">
+            Campo consecutivo es requerido.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-lg-3">
+          <mat-label>Fecha</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fecha" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="this.formControl()['fecha'].hasError('required')">Campo fecha es requerido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-lg-6">
+          <mat-label>Medico</mat-label>
+          <mat-select formControlName="asistencial_medico_id">
+            <mat-option value="" selected disabled>Seleccionar</mat-option>
+            <mat-option [value]="medico.id" *ngFor="let medico of listadoMedicos"
+            >{{ medico.identificacion }} | {{medico.primer_nombre}} {{medico.primer_apellido}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="this.formControl()['asistencial_medico_id'].hasError('required')"
+          >Campo Medico es requerido.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-lg-3">
+          <mat-label>Evolucion</mat-label>
+          <mat-select formControlName="asistencial_evolucion_id">
+            <mat-option value="" selected disabled>Seleccionar</mat-option>
+            <mat-option [value]="evolucion.id" *ngFor="let evolucion of listadoEvolucionMedica"
+            >{{ evolucion.fecha | date }} | {{ evolucion.hora }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="this.formControl()['asistencial_evolucion_id'].hasError('required')"
+          >Campo evolucion requerido.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-lg-3">
+          <mat-label>Remitir a</mat-label>
+          <mat-select formControlName="asistencial_farmacia_id">
+            <mat-option value="" selected disabled>Seleccionar</mat-option>
+            <mat-option [value]="farmacia.id" *ngFor="let farmacia of listadoFarmacias"
+            >{{ farmacia.razon_social }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="this.formControl()['asistencial_farmacia_id'].hasError('required')"
+          >Campo remitir a requerido.</mat-error>
+        </mat-form-field>
+
+      </div>
+
+      
+    </form>
+    <form [formGroup]="formularioDetalle">
+      <div class="row align-items-center">
+        
+        <div class="col-lg-12 ">
+          <div class="d-flex align-items-end">
+            <mat-icon color="primary">play_arrow</mat-icon>Detalle de la orden
+          </div>
+          <hr>
+        </div>
+        <mat-form-field appearance="outline" class="col-lg-9">
+          <mat-label>Medicamento</mat-label>
+          <mat-select formControlName="asistencial_medicamento_id">
+            <mat-option value="" selected disabled>Seleccionar</mat-option>
+            <mat-option [value]="medicamento.id" *ngFor="let medicamento of listadoMedicamentos"
+            >{{ medicamento.nombre }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="this.formDetalleControl()['asistencial_medicamento_id'].hasError('required')"
+          >Campo Medicamento es requerido.</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="col-lg-3">
+          <mat-label>Cantidad</mat-label>
+          <input matInput type="number" placeholder="Escribir..." formControlName="cantidad" />
+          <mat-icon matSuffix>numbers</mat-icon>
+          <mat-error *ngIf="this.formDetalleControl()['cantidad'].hasError('required')"
+          >Campo cantidad es requerido.</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="col-lg-10">
+          <mat-label>Descripcion</mat-label>
+          <textarea matInput placeholder="Escribir..." formControlName="descripcion"></textarea>
+        </mat-form-field>
+  
+        <div appearance="outline" class="col-lg-2 d-inline">
+          <button type="button" mat-raised-button color="primary" class="w-100 mb-3" (click)="pushItemDetalle()">
+            <mat-icon>send</mat-icon>
+          </button>
+        </div>
+  
+        <div class="col-lg-4" *ngFor="let item of detalle; let index = index">
+          <div class="card text-dark bg-light mb-3">
+            <div class="card-header d-flex justify-content-between align-items-end">
+              <div>Opciones:</div>
+              <div>
+                <button type="button" mat-icon-button color="warn" (click)="eliminarItemDetalle(index)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Medicamento: {{item.asistencial_medicamento_nombre}}</li>
+              <li class="list-group-item">Cantidad: {{item.cantidad}}</li>
+              <li class="list-group-item" [matTooltip]="item.descripcion">Descripción: {{item.descripcion | slice: 0 : 100}}...</li>
+            </ul>
+          </div>
+        </div>
+        
+      </div>
+    </form>
+  </div>
+</div>

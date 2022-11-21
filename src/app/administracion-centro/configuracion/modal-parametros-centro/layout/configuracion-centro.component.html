@@ -1,0 +1,28 @@
+
+<div mat-dialog-content class="scroll-style">
+  <mat-tab-group mat-align-tabs="center" >
+    <mat-tab label="Actualizar Centro Medico">
+      <app-actualizar-centro [centro_medico]="centro_medico"></app-actualizar-centro>
+    </mat-tab>
+    <mat-tab label="Tipos de Documentos">
+      <app-tipos-documentos [centro_medico]="centro_medico"></app-tipos-documentos>
+    </mat-tab>
+    <mat-tab label="Parametros">
+      <app-centros-medicos-parametros [centro_medico]="centro_medico"></app-centros-medicos-parametros>
+    </mat-tab>
+    <mat-tab label="Horarios de Atención">
+      <app-centros-medicos-horarios [centro_medico]="centro_medico"></app-centros-medicos-horarios>
+    </mat-tab>
+    <mat-tab label="Asignar Usuario">
+      Asignar Usuario
+    </mat-tab>
+    <mat-tab label=" Asignar Permisos de Usuario">
+      Asignar Permisos de Usuario
+    </mat-tab>
+  </mat-tab-group>
+  
+</div>
+<!-- <div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+</div> -->

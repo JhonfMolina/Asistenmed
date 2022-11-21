@@ -1,0 +1,72 @@
+<div class="row align-items-center">
+  <div class="col-lg-4">
+    <div class="card text-white bg-primary mb-3">
+      <div class="card-header d-flex align-items-center">
+        <mat-icon>medication_liquid</mat-icon> &nbsp; RECETARIO
+      </div>
+      <div class="card-body">
+        <button
+          mat-raised-button
+          class="w-100"
+          (click)="setTipoOrdenMedica('medicamentos')"
+        >
+          Generar Orden
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card text-white bg-primary mb-3">
+      <div class="card-header d-flex align-items-center">
+        <mat-icon>science</mat-icon> &nbsp; EXAMENES DE LABORATORIO
+      </div>
+      <div class="card-body">
+        <button
+          mat-raised-button
+          class="w-100"
+          (click)="setTipoOrdenMedica('laboratorio')"
+        >
+          Generar Orden
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card text-white bg-primary mb-3">
+      <div class="card-header d-flex align-items-center">
+        <mat-icon>broken_image</mat-icon> &nbsp; AYUDAS DIAGNOSTICA
+      </div>
+      <div class="card-body">
+        <button
+          mat-raised-button
+          class="w-100"
+          (click)="setTipoOrdenMedica('imagenologia')"
+        >
+          Generar Orden
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row align-items-center">
+  <div [ngSwitch]="tipoDocumento">
+    <div *ngSwitchCase="'medicamentos'">
+      <app-orden-medica-farmacia
+        [tipoOrdenMedica]="tipoOrdenMedica"
+      ></app-orden-medica-farmacia>
+    </div>
+    <div *ngSwitchCase="'laboratorio'">
+      <app-orden-medica-laboratorio
+        [tipoOrdenMedica]="tipoOrdenMedica"
+      ></app-orden-medica-laboratorio>
+    </div>
+    <div *ngSwitchCase="'imagenologia'">
+      <app-orden-medica-imagenologia
+        [tipoOrdenMedica]="tipoOrdenMedica"
+      ></app-orden-medica-imagenologia>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,105 @@
+<div class="card shadow-sm animate__animated animate__fadeIn mt-4">
+  <div
+    class="
+      card-header
+      bg-primary bg-gradient
+      text-white
+      d-flex
+      justify-content-between
+      align-items-center
+    "
+  >
+    HORARIOS DE ATENCIÓN
+    <div class="btn-group">
+      <button
+        mat-mini-fab
+        color="primary"
+        (click)="postCentroMedicoHorario()"
+        matTooltip="Guardar información"
+        matTooltipPosition="above"
+        *ngIf="this._botones.botones.btnGuardar"
+      >
+        <mat-icon>save</mat-icon>
+      </button>
+      <button
+        mat-mini-fab
+        color="primary"
+        (click)="putCentroMedicoParametro()"
+        matTooltip="Actualizar registro"
+        matTooltipPosition="above"
+        *ngIf="this._botones.botones.btnActualizar"
+      >
+        <mat-icon>update</mat-icon>
+      </button>
+      <button
+        mat-mini-fab
+        color="warn"
+        (click)="limpiarVista()"
+        matTooltip="Limpiar vista"
+        matTooltipPosition="above"
+      >
+        <mat-icon>clear</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="formulario">
+
+      <div class="row align-items-center">
+        <h3 class="col-12 col-lg-5"><mat-icon>date_range</mat-icon> Días disponibles</h3>
+        <mat-form-field appearance="outline" class="col-12 col-lg-6">
+          <mat-label>Día</mat-label>
+          <mat-select formControlName="dia_semana">
+            <mat-option value="" selected disabled>Seleccionar</mat-option>
+            <mat-option [value]="dia" *ngFor="let dia of diasSemana">{{dia}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+      </div>
+      
+      <h3 class="mt-3"><mat-icon>timer</mat-icon> Horas disponibles</h3>
+      <div class="mt-1 row align-items-center">
+        
+        <div class="col-3 col-lg-1 text-center">De</div>
+
+        <mat-form-field appearance="outline" class="col-9 col-lg-5">
+          <mat-label>Hora de Apertura</mat-label>
+          <input type="time" matInput placeholder="08:00 AM" formControlName="hora_apertura" required/>
+          <mat-error *ngIf="this.formControl().hora_apertura.hasError('required')">Campo hora de Apertura es requerido.</mat-error>
+        </mat-form-field>
+
+        <div class="col-3 col-lg-1 text-center">A</div>
+        <mat-form-field appearance="outline" class="col-9 col-lg-5">
+          <mat-label>Hora de Cierre</mat-label>
+          <input type="time" matInput placeholder="12:00 M" formControlName="hora_cierre" required/>
+          <mat-error *ngIf="this.formControl().hora_cierre.hasError('required')">Campo hora de Cierre es requerido.</mat-error>
+        </mat-form-field>
+        <mat-divider></mat-divider>
+      </div>
+      
+      <div class="mt-3 row">
+        <mat-checkbox formControlName="intervaloReceso" class="h3">{{this.formControl().intervaloReceso.value ? 'Intervalo de descanso' : 'Sin descanso'}}</mat-checkbox>
+      </div>
+
+      <div class="mt-1 row align-items-center" *ngIf="this.formControl().intervaloReceso.value">
+        <div class="col-3 col-lg-1 text-center">De</div>
+        <mat-form-field appearance="outline" class="col-9 col-lg-5">
+          <mat-label>Hora descanso Inicial</mat-label>
+          <input type="time" matInput placeholder="08:00 AM" formControlName="hora_descanso_inicial"/>
+          <mat-error *ngIf="this.formControl().hora_descanso_inicial.hasError('required')">Campo hora descanso inicial es requerido.</mat-error>
+        </mat-form-field>
+
+        <div class="col-3 col-lg-1 text-center">A</div>
+        <mat-form-field appearance="outline" class="col-9 col-lg-5">
+          <mat-label>Hora descanso Final</mat-label>
+          <input type="time" matInput placeholder="12:00 M" formControlName="hora_descanso_final"/>
+          <mat-error *ngIf="this.formControl().hora_descanso_final.hasError('required')">Campo hora descanso final es requerido.</mat-error>
+        </mat-form-field>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+

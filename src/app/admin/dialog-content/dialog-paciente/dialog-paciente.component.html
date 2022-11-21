@@ -1,0 +1,81 @@
+
+<div class="card shadow-sm animate__animated animate__fadeIn">
+    <div
+      class="
+        card-header
+        bg-primary bg-gradient
+        text-white
+        d-flex
+        justify-content-between
+        align-items-center
+      "
+    >
+      LISTADO DE PACIENTES 
+    </div>
+</div>
+
+<div class="contenedor-tabla" *ngIf="dataSource.data.length > 0">
+    <mat-form-field appearance="outline">
+      <mat-label>Buscar paciente</mat-label>
+      <input
+        matInput
+        (keyup)="applyFilter($event)"
+        placeholder="Filtrar"
+        #input
+      />
+    </mat-form-field>
+    <div class="card shadow-sm">
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="documento" >
+          <th mat-header-cell *matHeaderCellDef >Documento de Identidad</th>
+          <td mat-cell *matCellDef="let element" class="pe-3">
+            {{ element.utilidad_tipo_identificacion_nombre | titlecase}}:
+            {{ element.identificacion }}
+          </td>
+        </ng-container>
+  
+        <!-- Name Column -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef>Nombre del Paciente</th>
+          <td mat-cell *matCellDef="let element" class="pe-3">
+            {{ element.primer_nombre | titlecase}} {{ element.primer_apellido | titlecase}}
+            {{ element.segundo_apellido | titlecase}}
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="correo">
+          <th mat-header-cell *matHeaderCellDef>Correo Electrónico</th>
+          <td mat-cell *matCellDef="let element" class="pe-3">{{ element.correo }}</td>
+        </ng-container>
+  
+        <ng-container matColumnDef="seleccionar">
+          <th mat-header-cell *matHeaderCellDef>Editar Registro</th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="getPaciente(element)"
+            >
+              <mat-icon>check</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">
+            No se encontraron datos en la busqueda. " {{ input.value }} "
+          </td>
+        </tr>
+      </table>
+      <mat-paginator
+        [length]="dataSource.data.length"
+        [pageSize]="4"
+        [pageSizeOptions]="[3]"
+        hidePageSize
+      ></mat-paginator>
+    </div>
+  </div>

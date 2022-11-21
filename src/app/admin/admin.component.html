@@ -1,0 +1,95 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav shadow-sm bg-primary"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 my-3">
+          <img
+            src="../../assets/images/asistenmed-logo/logo-fondo-transparente-blanco-500px.png"
+            class="img-fluid"
+          />
+        </div>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-nav-list>
+      <app-sidebar></app-sidebar>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content class="scroll-style">
+    <mat-toolbar class="d-flex justify-content-between">
+      <div class="d-flex align-items-center">
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()"
+          *ngIf="isHandset$ | async"
+        >
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+        <h1 class="d-inline-block text-wrap m-0 lh-sm fs-6">{{CENTRO_MEDICO.razon_social | titlecase}}</h1>
+      </div>
+      <div class="d-flex ">
+
+        <button mat-icon-button color="primary" [matMenuTriggerFor]="notification">
+          <mat-icon matTooltip="Notificacines" matBadge="8" matBadgePosition="above after" matBadgeColor="warn" matBadgeSize = 'small'>circle_notifications</mat-icon>
+        </button>
+        <mat-menu #notification="matMenu">
+          <button mat-menu-item>
+            <mat-icon color="accent">feedback</mat-icon> Lorem ipsum dolor sit amet.
+          </button>
+          <button mat-menu-item>
+            <mat-icon>feedback</mat-icon> Lorem ipsum dolor sit amet consectetur adipisicing. 
+          </button>
+          <button mat-menu-item>
+            <mat-icon color="accent">feedback</mat-icon> Lorem ipsum dolor sit amet.
+          </button>
+          <button mat-menu-item>
+            <mat-icon>feedback</mat-icon> Lorem ipsum dolor sit amet consectetur adipisicing. 
+          </button>
+        </mat-menu>
+
+        <button mat-icon-button color="primary" [matMenuTriggerFor]="soporte">
+          <mat-icon matTooltip="Soporte Tecnico">support_agent</mat-icon>
+        </button>
+        <mat-menu #soporte="matMenu">
+          <button mat-menu-item>
+            <mat-icon color="primary">email</mat-icon> soporte@asistenmed.com
+          </button>
+          <button mat-menu-item>
+            <mat-icon color="primary">phone</mat-icon> +57 3213044576 
+          </button>
+        </mat-menu>
+
+        <button mat-icon-button color="primary" [matMenuTriggerFor]="menu">
+          <mat-icon matTooltip="Sesión de Usuario">laptop_mac</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item routerLink="/admin/">
+            <mat-icon>dashboard</mat-icon>
+            <span>Panel Administrativo</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>assignment_ind</mat-icon>
+            <span>Perfil Usuario</span>
+          </button>
+          <button mat-menu-item (click)="cerrarSesion()">
+            <mat-icon>logout</mat-icon>
+            <span>Cerrar Sesión</span>
+          </button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+    <mat-progress-bar mode="indeterminate" *ngIf="_progressBar.loader" class="position-relative"></mat-progress-bar>
+    <div class="container py-3">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
