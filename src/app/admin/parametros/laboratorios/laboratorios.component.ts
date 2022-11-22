@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
@@ -19,7 +19,7 @@ import { AuthService } from 'src/app/client/auth/service/auth.service';
 })
 export class LaboratoriosComponent implements OnInit, OnDestroy {
 
-  public formulario: UntypedFormGroup;
+  public formulario: FormGroup;
   public centrosMedicos: Array<any> = [];
   public listadoTiposIdentificaciones: Array<any> = [];
   public listadoDepartamentos: Array<any> = [];
@@ -27,7 +27,7 @@ export class LaboratoriosComponent implements OnInit, OnDestroy {
   public displayedColumns: string[] = ['identificacion','razon_social', 'descripcion', 'seleccionar'];
   public dataSource = new MatTableDataSource();
   public subscription: Subscription[] = [];
-  public _botones: Botones;
+  public _botones: Botones | any;
   public CENTRO_MEDICO = this._auth.getCookieCentroMedico();
 
   @ViewChild(MatPaginator, { static: false }) set paginator(
@@ -46,13 +46,7 @@ export class LaboratoriosComponent implements OnInit, OnDestroy {
     public _formBuilder: UntypedFormBuilder,
     public _mensaje: NotificationService,
     public _auth: AuthService,
-  ) {}
-
-  ngOnDestroy(): void {
-    this.subscription.forEach((element) => element.unsubscribe());
-  }
-
-  ngOnInit(): void {
+  ) {
     this.formulario = this._formBuilder.group({
       _id:                      [''],
       razon_social:             ['', Validators.required],
@@ -65,13 +59,21 @@ export class LaboratoriosComponent implements OnInit, OnDestroy {
       descripcion:              [''],
       estado:                   [false],
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((element) => element.unsubscribe());
+  }
+
+  ngOnInit(): void {
+    
     this.subscription.push(
       this._laboratoriosService.refresh.subscribe(() => this.getListadoLaboratorios())
     );
     this._botones = new Botones();
     this._botones.ctaInicial();
     this.inicializador();
-    this.formControl().utilidad_departamento_id.valueChanges.subscribe((resp) => {
+    this.formControl()['utilidad_departamento_id'].valueChanges.subscribe((resp) => {
       if (resp) {
         this.getListadoCiudadesPorDepartamento(resp);
       }
@@ -85,16 +87,16 @@ export class LaboratoriosComponent implements OnInit, OnDestroy {
   dataFarmacia = () => {
     return new Laboratorio(
     this.CENTRO_MEDICO.id,
-    this.formControl().utilidad_tipo_identificacion_id.value,
-    this.formControl().identificacion.value,
-    this.formControl().razon_social.value,
-    this.formControl().utilidad_departamento_id.value,
-    this.formControl().utilidad_ciudad_id.value,
-    this.formControl().direccion.value,
-    this.formControl().telefonos.value,
-    this.formControl().descripcion.value,
-    this.formControl().estado.value? Number(true): Number(false),
-    this.formControl()._id.value
+    this.formControl()['utilidad_tipo_identificacion_id'].value,
+    this.formControl()['identificacion'].value,
+    this.formControl()['razon_social'].value,
+    this.formControl()['utilidad_departamento_id'].value,
+    this.formControl()['utilidad_ciudad_id'].value,
+    this.formControl()['direccion'].value,
+    this.formControl()['telefonos'].value,
+    this.formControl()['descripcion'].value,
+    this.formControl()['estado'].value? Number(true): Number(false),
+    this.formControl()['_id'].value
     )
   };
 
@@ -174,7 +176,7 @@ export class LaboratoriosComponent implements OnInit, OnDestroy {
 
   putLaboratorio() {    
     if (this.formulario.valid) {
-      this.subscription.push(this._laboratoriosService.putLaboratorio(this.dataFarmacia(), this.formControl()._id.value).subscribe((resp) => {
+      this.subscription.push(this._laboratoriosService.putLaboratorio(this.dataFarmacia(), this.formControl()['_id'].value).subscribe((resp) => {
         this.formulario.reset();
         this._mensaje.mensajeSuccess('Laboratorio actualizado exitosamente.');
         this._botones.ctaInicial();

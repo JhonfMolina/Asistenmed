@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CentrosMedicosHorariosService } from 'src/app/administracion-centro/service/centros-medicos-horarios.service';
 import { Botones } from 'src/app/helpers/btn-accion';
@@ -14,34 +14,36 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class CentrosMedicosHorariosComponent implements OnInit, OnDestroy {
 
-  public formulario:                      UntypedFormGroup;
+  public formulario:                      FormGroup;
   public diasSemana:                      string[] = ['lunes','martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
   public listadoHorarios:                 Array<any> = [];
   public subscription:                    Subscription[] = [];
-  public _botones:                        Botones;
-  @Input()                                centro_medico:CentroMedico;
+  public _botones:                        Botones | any;;
+  @Input()                                centro_medico : CentroMedico | any;
 
   constructor( 
     public _centroMedicoHorarioService: CentrosMedicosHorariosService,
     public _formBuilder: UntypedFormBuilder,
     public _mensaje: NotificationService
-    ) { }
+    ) {
+      this.formulario = this._formBuilder.group({
+        _id:                      [''],
+        dia_semana:               ['', Validators.required],
+        hora_apertura:            ['', Validators.required],
+        hora_cierre:              ['', Validators.required],
+        hora_descanso_inicial:    [''],
+        hora_descanso_final:      [''],
+        intervaloReceso:          [false],
+        estado:                   [false],
+      });
+     }
 
   ngOnInit(): void {
-    this.formulario = this._formBuilder.group({
-      _id:                      [''],
-      dia_semana:               ['', Validators.required],
-      hora_apertura:            ['', Validators.required],
-      hora_cierre:              ['', Validators.required],
-      hora_descanso_inicial:    [''],
-      hora_descanso_final:      [''],
-      intervaloReceso:          [false],
-      estado:                   [false],
-    });
+    
     this._botones = new Botones();
     this._botones.ctaInicial();
     this.inicializador()
-    this.formControl().dia_semana.valueChanges.subscribe((resp) => {
+    this.formControl()['dia_semana'].valueChanges.subscribe((resp) => {
       if (resp) {
         this.findCentroMedicoHorario(resp);
       }
@@ -78,13 +80,13 @@ export class CentrosMedicosHorariosComponent implements OnInit, OnDestroy {
   dataCentroMedicoHorario = () => {
     return new CentroMedicoHorario(
       this.centro_medico.id!,
-      this.formControl().dia_semana.value,
-      this.formControl().hora_apertura.value,
-      this.formControl().hora_cierre.value,
-      this.formControl().hora_descanso_inicial.value,
-      this.formControl().hora_descanso_final.value,
-      this.formControl().estado.value? Number(true): Number(false),
-      this.formControl()._id.value
+      this.formControl()['dia_semana'].value,
+      this.formControl()['hora_apertura'].value,
+      this.formControl()['hora_cierre'].value,
+      this.formControl()['hora_descanso_inicial'].value,
+      this.formControl()['hora_descanso_final'].value,
+      this.formControl()['estado'].value? Number(true): Number(false),
+      this.formControl()['_id'].value
     )
   };
 
@@ -137,7 +139,7 @@ export class CentrosMedicosHorariosComponent implements OnInit, OnDestroy {
 
   putCentroMedicoParametro() {        
     if (this.formulario.valid) {
-      this.subscription.push(this._centroMedicoHorarioService.putHorarioCentroMedico(this.dataCentroMedicoHorario(), this.formControl()._id.value).subscribe(() => {
+      this.subscription.push(this._centroMedicoHorarioService.putHorarioCentroMedico(this.dataCentroMedicoHorario(), this.formControl()['_id'].value).subscribe(() => {
         this._mensaje.mensajeSuccess('Parametro de centro medico actualizado exitosamente.');
         this._botones.ctaInicial();
         this.limpiarVista();

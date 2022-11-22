@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CentroMedico } from 'src/app/models/parametros/centro-medico.model';
 import { CiudadesService } from 'src/app/services/ciudades.service';
@@ -16,7 +16,7 @@ import { CentrosMedicosService } from '../../service/centros-medicos.service';
   styleUrls: ['./centros-medicos.component.scss'],
 })
 export class CentrosMedicosComponent implements OnInit, OnDestroy {
-  public formulario: UntypedFormGroup;
+  public formulario: FormGroup;
   public listadoTipoIdentificacion: Array<any> = [];
   public listadoDepartamentos: Array<any> = [];
   public listadoCiudades: Array<any> = [];
@@ -30,13 +30,7 @@ export class CentrosMedicosComponent implements OnInit, OnDestroy {
     public _progressBar: ProgressBarService,
     public _mensaje: NotificationService,
     public _tipoIdentificacion: TipoIdentificacionService,
-  ) {}
-
-  ngOnDestroy(): void {
-    this.subscription.forEach((element) => element.unsubscribe());
-  }
-
-  ngOnInit(): void {
+  ) {
     this.formulario = this._formBuilder.group({
       _id:                                [''],
       utilidad_tipo_identificacion_id:    ['', Validators.required],
@@ -50,11 +44,19 @@ export class CentrosMedicosComponent implements OnInit, OnDestroy {
       estado:                             [true],
     });
    
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((element) => element.unsubscribe());
+  }
+
+  ngOnInit(): void {
+   
     setTimeout(() => {
       this.getListadoTipoIdentificacion();
       this.getListadoDepartamentos();
     }, 0);
-    this.formControl().utilidad_departamento_id.valueChanges.subscribe((resp) => {
+    this.formControl()['utilidad_departamento_id'].valueChanges.subscribe((resp) => {
       if (resp) {
         this.getListadoCiudades(resp);
       }
@@ -67,16 +69,16 @@ export class CentrosMedicosComponent implements OnInit, OnDestroy {
 
   dataCentroMedico = () => {
     return new CentroMedico(
-    this.formControl().utilidad_tipo_identificacion_id.value,
-    this.formControl().identificacion.value,
-    this.formControl().razon_social.value,
-    this.formControl().utilidad_departamento_id.value,
-    this.formControl().utilidad_ciudad_id.value,
-    this.formControl().direccion.value,
-    this.formControl().telefonos.value,
-    this.formControl().descripcion.value,
-    this.formControl().estado.value ? Number(true) : Number(false),
-    this.formControl()._id.value
+    this.formControl()['utilidad_tipo_identificacion_id'].value,
+    this.formControl()['identificacion'].value,
+    this.formControl()['razon_social'].value,
+    this.formControl()['utilidad_departamento_id'].value,
+    this.formControl()['utilidad_ciudad_id'].value,
+    this.formControl()['direccion'].value,
+    this.formControl()['telefonos'].value,
+    this.formControl()['descripcion'].value,
+    this.formControl()['estado'].value ? Number(true) : Number(false),
+    this.formControl()['_id'].value
     )
   };
 
@@ -126,7 +128,7 @@ export class CentrosMedicosComponent implements OnInit, OnDestroy {
   putCentroMedico() {
     if (this.formulario.valid) {
       this._centrosMedicosService
-        .putCentroMedico(this.dataCentroMedico(), this.formControl()._id.value)
+        .putCentroMedico(this.dataCentroMedico(), this.formControl()['_id'].value)
         .subscribe(() => {
           this.formulario.reset();
           this._mensaje.mensajeSuccess(

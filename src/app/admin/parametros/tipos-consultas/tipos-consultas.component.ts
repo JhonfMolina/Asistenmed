@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
@@ -16,13 +16,13 @@ import { TipoConsultasService } from '../service/tipos-consultas.service';
 })
 export class TiposConsultasComponent implements OnInit, OnDestroy {
 
-  public formulario: UntypedFormGroup;
-  public displayedColumns: string[] = ['nombre', 'seleccionar'];
-  public dataSource = new MatTableDataSource();
-  public listadoCentrosMedicos:Array<any> = [];
-  public subscription: Subscription[] = [];
-  public _botones: Botones;
-  public CENTRO_MEDICO = this._auth.getCookieCentroMedico();
+  public formulario:            FormGroup;
+  public displayedColumns:      string[] = ['nombre', 'seleccionar'];
+  public dataSource =           new MatTableDataSource();
+  public listadoCentrosMedicos: Array<any> = [];
+  public subscription:          Subscription[] = [];
+  public _botones:              Botones | any;
+  public CENTRO_MEDICO =        this._auth.getCookieCentroMedico();
 
   @ViewChild(MatPaginator, { static: false }) set paginator(
     value: MatPaginator
@@ -37,18 +37,20 @@ export class TiposConsultasComponent implements OnInit, OnDestroy {
     public _tipoConsultasService: TipoConsultasService,
     public _mensaje: NotificationService,
     public _auth: AuthService,
-  ) {}
+  ) {
+    this.formulario = this._formBuilder.group({
+      _id:                    [''],
+      nombre:                 ['', Validators.required],
+      estado:                 [],
+    });
+  }
 
   ngOnDestroy(): void {
     this.subscription.forEach((element) => element.unsubscribe());
   }
 
   ngOnInit(): void {
-    this.formulario = this._formBuilder.group({
-      _id:                    [''],
-      nombre:                 ['', Validators.required],
-      estado:                 [],
-    });
+    
     this.subscription.push(
       this._tipoConsultasService.refresh.subscribe(() => this.getListadoTipoConsultas())
     );
@@ -63,9 +65,9 @@ export class TiposConsultasComponent implements OnInit, OnDestroy {
   dataTipoConsulta = () => {
     return new TipoConsulta(
       this.CENTRO_MEDICO.id,
-      this.formControl().nombre.value,
-      this.formControl().estado.value? Number(true): Number(false),
-      this.formControl()._id.value
+      this.formControl()['nombre'].value,
+      this.formControl()['estado'].value? Number(true): Number(false),
+      this.formControl()['_id'].value
     )
   };
 
@@ -111,7 +113,7 @@ export class TiposConsultasComponent implements OnInit, OnDestroy {
 
   putTipoConsultas() {    
     if (this.formulario.valid) {
-      this.subscription.push(this._tipoConsultasService.putTipoConsultas(this.dataTipoConsulta(), this.formControl()._id.value).subscribe(() => {
+      this.subscription.push(this._tipoConsultasService.putTipoConsultas(this.dataTipoConsulta(), this.formControl()['_id'].value).subscribe(() => {
         this.formulario.reset();
         this._mensaje.mensajeSuccess('Tipo de consulta actualizada exitosamente.');
         this._botones.ctaInicial();

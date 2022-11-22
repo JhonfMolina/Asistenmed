@@ -1,6 +1,26 @@
 <div class="row">
   <div class="col-lg-3 col-md-6" *ngFor="let centro of listadoCentrosMedicos">
-    <mat-card class="card-empresa border border-1 shadow-sm position-relative h-100" >
+    <div class="card card-empresa border border-1 shadow-sm position-relative h-100" >
+      <div class="card-body">
+        <h4 class="card-title text-warning"> {{ centro.razon_social | titlecase | slice:0:35 }}</h4>
+        <mat-divider></mat-divider>
+        <div class="mt-3">
+          <p class="card-text">
+           {{centro.descripcion | titlecase | slice:0:115}}...
+            <!--126-->
+          </p>
+          <p>Dirección: {{centro.direccion | titlecase }}</p>
+        </div>
+        <br>
+      <button
+        mat-raised-button
+        color="primary"
+        class="position-absolute" style="bottom: 10px; left: 15px; width: 90%;"
+        (click)="ingresarCentroMedico(centro)"
+      >
+        Ingresar <mat-icon>login</mat-icon>
+      </button>
+      </div>
       <button
         mat-icon-button
         color="warn"
@@ -10,24 +30,8 @@
       >
         <mat-icon>settings</mat-icon>
       </button>
-      <h4 class="card-title text-warning"> {{ centro.razon_social | titlecase | slice:0:35 }}</h4>
-      <mat-divider [inset]="true"></mat-divider>
-      <mat-card-content class="mt-3">
-        <p class="card-text">
-         {{centro.descripcion | titlecase | slice:0:115}}...
-          <!--126-->
-        </p>
-        <p>Dirección: {{centro.direccion | titlecase }}</p>
-      </mat-card-content>
-<br>
-      <button
-        mat-raised-button
-        color="primary"
-        class="position-absolute" style="bottom: 10px; left: 15px; width: 90%;"
-        (click)="ingresarCentroMedico(centro)"
-      >
-        Ingresar <mat-icon>login</mat-icon>
-      </button>
-    </mat-card>
+     
+
+    </div>
   </div>
 </div>

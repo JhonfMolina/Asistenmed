@@ -18,11 +18,11 @@
             <mat-label>Nombre</mat-label>
             <input matInput placeholder="Escribir..." formControlName="nombre" required/>
             <mat-icon matSuffix>quiz</mat-icon>
-            <mat-error *ngIf="this.formControlEstadoIngreso().nombre.hasError('required')">Campo nombre es requerido.</mat-error>
+            <mat-error *ngIf="this.formControlEstadoIngreso()['nombre'].hasError('required')">Campo nombre es requerido.</mat-error>
           </mat-form-field>
   
           <div class="col-lg-4" *ngIf="_btn_ingreso.botones.btnActualizar">
-            <mat-checkbox formControlName="estado">{{this.formControlEstadoIngreso().estado.value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
+            <mat-checkbox formControlName="estado">{{this.formControlEstadoIngreso()['estado'].value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
           </div>
         </form>
 
@@ -107,11 +107,11 @@
             <mat-label>Nombre</mat-label>
             <input matInput placeholder="Escribir..." formControlName="nombre" required/>
             <mat-icon matSuffix>quiz</mat-icon>
-            <mat-error *ngIf="this.formControlExamenFisico().nombre.hasError('required')">Campo nombre es requerido.</mat-error>
+            <mat-error *ngIf="this.formControlExamenFisico()['nombre'].hasError('required')">Campo nombre es requerido.</mat-error>
           </mat-form-field>
   
           <div class="col-lg-4" *ngIf="_btn_fisico.botones.btnActualizar">
-            <mat-checkbox formControlName="estado">{{this.formControlExamenFisico().estado.value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
+            <mat-checkbox formControlName="estado">{{this.formControlExamenFisico()['estado'].value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
           </div>
         </form>
 
@@ -196,11 +196,11 @@
             <mat-label>Nombre</mat-label>
             <input matInput placeholder="Escribir..." formControlName="nombre" required/>
             <mat-icon matSuffix>quiz</mat-icon>
-            <mat-error *ngIf="this.formControlAntecedentes().nombre.hasError('required')">Campo nombre es requerido.</mat-error>
+            <mat-error *ngIf="this.formControlAntecedentes()['nombre'].hasError('required')">Campo nombre es requerido.</mat-error>
           </mat-form-field>
   
           <div class="col-lg-4" *ngIf="_btn_antecedente.botones.btnActualizar">
-            <mat-checkbox formControlName="estado">{{this.formControlAntecedentes().estado.value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
+            <mat-checkbox formControlName="estado">{{this.formControlAntecedentes()['estado'].value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
           </div>
         </form>
         

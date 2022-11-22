@@ -57,18 +57,18 @@
           <mat-label>Nombre</mat-label>
           <input matInput placeholder="Escribir..." formControlName="nombre" required/>
           <mat-icon matSuffix>medication_liquid</mat-icon>
-          <mat-error *ngIf="this.formControl().nombre.hasError('required')">Campo nombre es requerido.</mat-error>
+          <mat-error *ngIf="this.formControl()['nombre'].hasError('required')">Campo nombre es requerido.</mat-error>
         </mat-form-field>
 
         <div class="col-lg-3 m-auto" *ngIf="_botones.botones.btnActualizar">
-          <mat-checkbox formControlName="estado">{{this.formControl().estado.value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
+          <mat-checkbox formControlName="estado">{{this.formControl()['estado'].value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
         </div>
       </form>
     </div>
   </div>
   
   <div class="contenedor-tabla" *ngIf="dataSource.data.length > 0">
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="outline">
       <mat-label>Buscar medicamentos</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" #input>
     </mat-form-field>

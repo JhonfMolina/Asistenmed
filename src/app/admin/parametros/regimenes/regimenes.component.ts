@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -17,14 +17,14 @@ import { RegimenesService } from '../service/regimenes.service';
 })
 export class RegimenesComponent implements OnInit, OnDestroy {
 
-  public formulario: UntypedFormGroup;
-  public centrosMedicos: Array<any> = [];
-  public listadoConvenios: Array<any> = [];
-  public displayedColumns: string[] = ['convenio', 'nombre', 'seleccionar'];
-  public dataSource = new MatTableDataSource();
-  public subscription: Subscription[] = [];
-  public _botones: Botones;
-  public CENTRO_MEDICO = this._auth.getCookieCentroMedico();
+  public formulario:              FormGroup;
+  public centrosMedicos:          Array<any> = [];
+  public listadoConvenios:        Array<any> = [];
+  public displayedColumns:        string[] = ['convenio', 'nombre', 'seleccionar'];
+  public dataSource =             new MatTableDataSource();
+  public subscription:            Subscription[] = [];
+  public _botones:                Botones | any;
+  public CENTRO_MEDICO =          this._auth.getCookieCentroMedico();
 
   @ViewChild(MatPaginator, { static: false }) set paginator(
     value: MatPaginator
@@ -40,19 +40,20 @@ export class RegimenesComponent implements OnInit, OnDestroy {
     public _formBuilder: UntypedFormBuilder,
     public _mensaje: NotificationService,
     public _auth: AuthService,
-  ) {}
-
-  ngOnDestroy(): void {
-    this.subscription.forEach((element) => element.unsubscribe());
-  }
-  
-  ngOnInit(): void {
+  ) {
     this.formulario = this._formBuilder.group({
       _id:                      [''],
       nombre:                   ['', Validators.required],
       asistencial_convenio_id:  ['', Validators.required],
       estado:                   [false]
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((element) => element.unsubscribe());
+  }
+  
+  ngOnInit(): void {
     this.subscription.push(
       this._regimenesService.refresh.subscribe(() => this.getListadoRegimen())
     );
@@ -68,10 +69,10 @@ export class RegimenesComponent implements OnInit, OnDestroy {
   dataRegimen = () => {
     return new Regimen(
     this.CENTRO_MEDICO.id,
-    this.formControl().asistencial_convenio_id.value,
-    this.formControl().nombre.value,
-    this.formControl().estado.value? Number(true): Number(false),
-    this.formControl()._id.value
+    this.formControl()['asistencial_convenio_id'].value,
+    this.formControl()['nombre'].value,
+    this.formControl()['estado'].value? Number(true): Number(false),
+    this.formControl()['_id'].value
     )
   };
 
@@ -110,8 +111,8 @@ export class RegimenesComponent implements OnInit, OnDestroy {
   }
 
   getListadoRegimen() {
-    if (!this.formControl().asistencial_convenio_id.value) return this._mensaje.mensajeInfo('Debe seleccionar un convenio.')
-    this.subscription.push(this._regimenesService.getListadoRegimenesConvenios(this.CENTRO_MEDICO.id, this.formControl().asistencial_convenio_id.value).subscribe((resp) => {
+    if (!this.formControl()['asistencial_convenio_id'].value) return this._mensaje.mensajeInfo('Debe seleccionar un convenio.')
+    this.subscription.push(this._regimenesService.getListadoRegimenesConvenios(this.CENTRO_MEDICO.id, this.formControl()['asistencial_convenio_id'].value).subscribe((resp) => {
       this.dataSource.data = resp.data;
     }));
   }
@@ -131,7 +132,7 @@ export class RegimenesComponent implements OnInit, OnDestroy {
 
   putRegimen() {    
     if (this.formulario.valid) {
-      this.subscription.push(this._regimenesService.putRegimenes(this.dataRegimen(), this.formControl()._id.value).subscribe((resp) => {
+      this.subscription.push(this._regimenesService.putRegimenes(this.dataRegimen(), this.formControl()['_id'].value).subscribe((resp) => {
         this.formulario.reset();
         this._mensaje.mensajeSuccess('Regimen actualizado exitosamente.');
         this._botones.ctaInicial();

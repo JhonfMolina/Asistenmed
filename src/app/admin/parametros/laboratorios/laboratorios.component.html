@@ -57,7 +57,7 @@
           <mat-label>razon_social</mat-label>
           <input matInput placeholder="Escribir..." formControlName="razon_social" required/>
           <mat-icon matSuffix>science</mat-icon>
-          <mat-error *ngIf="this.formControl().razon_social.hasError('required')">Campo Razon Social es requerido.</mat-error>
+          <mat-error *ngIf="this.formControl()['razon_social'].hasError('required')">Campo Razon Social es requerido.</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-lg-3">
@@ -71,7 +71,7 @@
             >
           </mat-select>
           <mat-error
-            *ngIf="this.formControl().utilidad_tipo_identificacion_id.hasError('required')"
+            *ngIf="this.formControl()['utilidad_tipo_identificacion_id'].hasError('required')"
             >Campo tipo de doc. es requerido.</mat-error
           >
         </mat-form-field>
@@ -80,7 +80,7 @@
           <mat-label>Numero de Identificación</mat-label>
           <input matInput placeholder="Escribir..." formControlName="identificacion"/>
           <mat-icon matSuffix>numbers</mat-icon>
-          <mat-error *ngIf="this.formControl().identificacion.hasError('required')">Campo numero de ident. es requerido.</mat-error>
+          <mat-error *ngIf="this.formControl()['identificacion'].hasError('required')">Campo numero de ident. es requerido.</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-lg-3">
@@ -89,7 +89,7 @@
             <mat-option value="" selected disabled>Seleccionar</mat-option>
             <mat-option [value]="departamento.id" *ngFor="let departamento of listadoDepartamentos">{{ departamento.nombre }}</mat-option>
           </mat-select>
-          <mat-error *ngIf="this.formControl().utilidad_departamento_id.hasError('required')">Campo departamento es requerido.</mat-error>
+          <mat-error *ngIf="this.formControl()['utilidad_departamento_id'].hasError('required')">Campo departamento es requerido.</mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="col-lg-3">
           <mat-label>Ciudad</mat-label>
@@ -97,39 +97,39 @@
             <mat-option value="" selected disabled>Seleccionar</mat-option>
             <mat-option [value]="ciudades.id" *ngFor="let ciudades of listadoCiudades">{{ ciudades.nombre }}</mat-option>
           </mat-select>
-          <mat-error *ngIf="this.formControl().utilidad_ciudad_id.hasError('required')">Campo ciudad es requerido.</mat-error>
+          <mat-error *ngIf="this.formControl()['utilidad_ciudad_id'].hasError('required')">Campo ciudad es requerido.</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-lg-6">
           <mat-label>Dirección</mat-label>
           <input matInput placeholder="Escribir..." formControlName="direccion" required/>
           <mat-icon matSuffix>fmd_good</mat-icon>
-          <mat-error *ngIf="this.formControl().direccion.hasError('required')">Campo Direccion es requerido.</mat-error>
+          <mat-error *ngIf="this.formControl()['direccion'].hasError('required')">Campo Direccion es requerido.</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-lg-4">
           <mat-label>Telefono</mat-label>
           <input matInput placeholder="Escribir..." formControlName="telefonos" required/>
           <mat-icon matSuffix>phone</mat-icon>
-          <mat-error *ngIf="this.formControl().telefonos.hasError('required')">Campo Telefono es requerido.</mat-error>
+          <mat-error *ngIf="this.formControl()['telefonos'].hasError('required')">Campo Telefono es requerido.</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-lg-8">
           <mat-label>Descripcion</mat-label>
           <input matInput maxlength="200" matTooltip="Maximo 200 caracteres" placeholder="Escribir..." formControlName="descripcion" required/>
           <mat-icon matSuffix>comment</mat-icon>
-          <mat-error *ngIf="this.formControl().descripcion.hasError('required')">Campo Descripcion es requerido.</mat-error>
+          <mat-error *ngIf="this.formControl()['descripcion'].hasError('required')">Campo Descripcion es requerido.</mat-error>
         </mat-form-field>
 
         <div class="col-lg-3" *ngIf="_botones.botones.btnActualizar">
-          <mat-checkbox formControlName="estado">{{this.formControl().estado.value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
+          <mat-checkbox formControlName="estado">{{this.formControl()['estado'].value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
         </div>
       </form>
     </div>
   </div>
   
   <div class="contenedor-tabla" *ngIf="dataSource.data.length > 0">
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="outline">
       <mat-label>Buscar farmacia</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" #input>
     </mat-form-field>

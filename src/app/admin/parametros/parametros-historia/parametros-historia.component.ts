@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
@@ -18,17 +18,17 @@ import { ExamenFisicoService } from '../service/examen-fisico.service';
 })
 export class ParametrosHistoriaComponent implements OnInit, OnDestroy {
 
-  public formEstadoIngreso:                         UntypedFormGroup;
-  public formExamenFisico:                          UntypedFormGroup;
-  public formAntecedentes:                          UntypedFormGroup;
+  public formEstadoIngreso:                         FormGroup;
+  public formExamenFisico:                          FormGroup;
+  public formAntecedentes:                          FormGroup;
   public displayedColumns: string[] =               ['nombre', 'seleccionar'];
   public dataSourceEstadoIngreso =                  new MatTableDataSource();
   public dataSourceExamenFisico =                   new MatTableDataSource();
   public dataSourceAntecedentes =                   new MatTableDataSource();
   public subscription:                              Subscription[] = [];
-  public _btn_ingreso:                              Botones;
-  public _btn_fisico:                               Botones;
-  public _btn_antecedente:                          Botones;
+  public _btn_ingreso:                              Botones | any;
+  public _btn_fisico:                               Botones | any;
+  public _btn_antecedente:                          Botones | any;
   public CENTRO_MEDICO =                            this._auth.getCookieCentroMedico();
 
   @ViewChild(MatPaginator, { static: false }) set paginator(
@@ -50,13 +50,6 @@ export class ParametrosHistoriaComponent implements OnInit, OnDestroy {
     this.dataSourceEstadoIngreso.data =                  [];
     this.dataSourceExamenFisico.data =                   [];
     this.dataSourceAntecedentes.data =                   [];
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.forEach((element) => element.unsubscribe());
-  }
-  
-  ngOnInit(): void {
     this.formEstadoIngreso = this._formBuilder.group({
       _id:              [''],
       nombre:           ['', Validators.required],
@@ -72,6 +65,14 @@ export class ParametrosHistoriaComponent implements OnInit, OnDestroy {
       nombre:           ['', Validators.required],
       estado:           [false]
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((element) => element.unsubscribe());
+  }
+  
+  ngOnInit(): void {
+    
     
     this.subscription.push(this._estadoIngresoService.refresh.subscribe(() => this.getListadoEstadoIngreso()));
     this.subscription.push(this._examenFisicoService.refresh.subscribe(() => this.getListadoExamenFisico()));
@@ -115,27 +116,27 @@ export class ParametrosHistoriaComponent implements OnInit, OnDestroy {
   dataEstadoIngreso = ()=> {
    return new EstadoIngreso(
      this.CENTRO_MEDICO.id,
-     this.formControlEstadoIngreso().nombre.value,
-     this.formControlEstadoIngreso().estado.value,
-     this.formControlEstadoIngreso()._id.value,
+     this.formControlEstadoIngreso()['nombre'].value,
+     this.formControlEstadoIngreso()['estado'].value,
+     this.formControlEstadoIngreso()['_id'].value,
    )
   };
 
   dataExamenFisico = ()=> {
     return new ExamenFisico(
       this.CENTRO_MEDICO.id,
-      this.formControlExamenFisico().nombre.value,
-      this.formControlExamenFisico().estado.value,
-      this.formControlExamenFisico()._id.value,
+      this.formControlExamenFisico()['nombre'].value,
+      this.formControlExamenFisico()['estado'].value,
+      this.formControlExamenFisico()['_id'].value,
     )
   };
 
   dataAntecedentes = ()=> {
     return new Antecedentes(
       this.CENTRO_MEDICO.id,
-      this.formControlAntecedentes().nombre.value,
-      this.formControlAntecedentes().estado.value,
-      this.formControlAntecedentes()._id.value,
+      this.formControlAntecedentes()['nombre'].value,
+      this.formControlAntecedentes()['estado'].value,
+      this.formControlAntecedentes()['_id'].value,
     )
   }
 
@@ -233,7 +234,7 @@ export class ParametrosHistoriaComponent implements OnInit, OnDestroy {
 
   putEstadoIngresos() {    
     if (this.formEstadoIngreso.valid) {
-      this.subscription.push(this._estadoIngresoService.putEstadoIngresos(this.dataEstadoIngreso(), this.formControlEstadoIngreso()._id.value).subscribe((resp) => {
+      this.subscription.push(this._estadoIngresoService.putEstadoIngresos(this.dataEstadoIngreso(), this.formControlEstadoIngreso()['_id'].value).subscribe((resp) => {
         this.formEstadoIngreso.reset();
         this._mensaje.mensajeSuccess('Parametro estado de ingreso actualizado exitosamente.');
         this._btn_ingreso.ctaInicial();
@@ -245,7 +246,7 @@ export class ParametrosHistoriaComponent implements OnInit, OnDestroy {
 
   putExamenFisico() {    
     if (this.formExamenFisico.valid) {
-      this.subscription.push(this._examenFisicoService.putExamenFisico(this.dataExamenFisico(), this.formControlExamenFisico()._id.value).subscribe((resp) => {
+      this.subscription.push(this._examenFisicoService.putExamenFisico(this.dataExamenFisico(), this.formControlExamenFisico()['_id'].value).subscribe((resp) => {
         this.formExamenFisico.reset();
         this._mensaje.mensajeSuccess('Parametro examen fisico actualizado exitosamente.');
         this._btn_fisico.ctaInicial();
@@ -257,7 +258,7 @@ export class ParametrosHistoriaComponent implements OnInit, OnDestroy {
 
   putAntecedentes() {    
     if (this.formAntecedentes.valid) {
-      this.subscription.push(this._antecedentesService.putAntecedentes(this.dataAntecedentes(), this.formControlAntecedentes()._id.value).subscribe((resp) => {
+      this.subscription.push(this._antecedentesService.putAntecedentes(this.dataAntecedentes(), this.formControlAntecedentes()['_id'].value).subscribe((resp) => {
         this.formAntecedentes.reset();
         this._mensaje.mensajeSuccess('Parametro antecedentes actualizado exitosamente.');
         this._btn_antecedente.ctaInicial();

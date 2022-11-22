@@ -64,7 +64,7 @@
             >
           </mat-select>
           <mat-error
-            *ngIf="this.formControl().asistencial_convenio_id.hasError('required')"
+            *ngIf="this.formControl()['asistencial_convenio_id'].hasError('required')"
             >Campo convenio es requerido.</mat-error
           >
         </mat-form-field>
@@ -73,18 +73,18 @@
           <mat-label>Nombre</mat-label>
           <input matInput placeholder="Escribir..." formControlName="nombre" required/>
           <mat-icon matSuffix>bubble_chart</mat-icon>
-          <mat-error *ngIf="this.formControl().nombre.hasError('required')">Campo nombre es requerido.</mat-error>
+          <mat-error *ngIf="this.formControl()['nombre'].hasError('required')">Campo nombre es requerido.</mat-error>
         </mat-form-field>
 
         <div class="col-lg-4" *ngIf="_botones.botones.btnActualizar">
-          <mat-checkbox formControlName="estado">{{this.formControl().estado.value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
+          <mat-checkbox formControlName="estado">{{this.formControl()['estado'].value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
         </div>
       </form>
     </div>
   </div>
   
   <div class="contenedor-tabla" *ngIf="dataSource.data.length > 0">
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="outline">
       <mat-label>Buscar regimen</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" #input>
     </mat-form-field>

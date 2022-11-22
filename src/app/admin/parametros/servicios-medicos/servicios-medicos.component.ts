@@ -20,7 +20,7 @@ export class ServiciosMedicosComponent implements OnInit, OnDestroy {
   public dataSource = new MatTableDataSource();
   public listadoCentrosMedicos:Array<any> = [];
   public subscription: Subscription[] = [];
-  public _botones: Botones;
+  public _botones: Botones | any;
 
   @ViewChild(MatPaginator, { static: false }) set paginator(
     value: MatPaginator
@@ -34,18 +34,20 @@ export class ServiciosMedicosComponent implements OnInit, OnDestroy {
     public _formBuilder: FormBuilder,
     public _serviciosService: ServiciosMedicosService,
     public _mensaje: NotificationService
-  ) {}
+  ) {
+    this.formulario = this._formBuilder.group({
+      _id:                  [''],
+      nombre:               ['', Validators.required],
+      estado:               [false],
+    });
+  }
 
   ngOnDestroy(): void {
     this.subscription.forEach((element) => element.unsubscribe());
   }
 
   ngOnInit(): void {
-    this.formulario = this._formBuilder.group({
-      _id:                  [''],
-      nombre:               ['', Validators.required],
-      estado:               [false],
-    });
+    
     this.subscription.push(
       this._serviciosService.refresh.subscribe(() => this.getListadoServicios())
     );
@@ -61,9 +63,9 @@ export class ServiciosMedicosComponent implements OnInit, OnDestroy {
   dataServicios = () => {
     return new Servicio(
       1,
-      this.formControl().nombre.value,
-      this.formControl().estado.value? Number(true): Number(false),
-      this.formControl()._id.value
+      this.formControl()['nombre'].value,
+      this.formControl()['estado'].value? Number(true): Number(false),
+      this.formControl()['_id'].value
     )
   };
 
@@ -109,7 +111,7 @@ export class ServiciosMedicosComponent implements OnInit, OnDestroy {
 
   putServicios() {    
     if (this.formulario.valid) {
-      this.subscription.push(this._serviciosService.putServicios(this.dataServicios(), this.formControl()._id.value).subscribe(() => {
+      this.subscription.push(this._serviciosService.putServicios(this.dataServicios(), this.formControl()['_id'].value).subscribe(() => {
         this.formulario.reset();
         this._mensaje.mensajeSuccess('Servicio medico actualizado exitosamente.');
         this._botones.ctaInicial();

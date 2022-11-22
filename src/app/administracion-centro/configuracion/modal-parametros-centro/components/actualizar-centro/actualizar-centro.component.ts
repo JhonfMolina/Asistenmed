@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { CentrosMedicosService } from 'src/app/administracion-centro/service/centros-medicos.service';
 import { CentroMedico } from 'src/app/models/parametros/centro-medico.model';
@@ -16,12 +16,12 @@ import { TipoIdentificacionService } from 'src/app/services/tipo-identificacion.
 })
 export class ActualizarCentroComponent implements OnInit {
 
-  public formulario:                      UntypedFormGroup;
+  public formulario:                      FormGroup;
   public listadoTipoIdentificacion:       Array<any> = [];
   public listadoDepartamentos:            Array<any> = [];
   public listadoCiudades:                 Array<any> = [];
   public subscription:                    Subscription[] = [];
-  @Input()                                centro_medico:CentroMedico;
+  @Input()                                centro_medico : CentroMedico | any;
 
   constructor(
     public _centrosMedicosService: CentrosMedicosService,
@@ -31,13 +31,7 @@ export class ActualizarCentroComponent implements OnInit {
     public _progressBar: ProgressBarService,
     public _mensaje: NotificationService,
     public _tipoIdentificacion: TipoIdentificacionService,
-  ) {}
-
-  ngOnDestroy(): void {
-    this.subscription.forEach((element) => element.unsubscribe());
-  }
-
-  ngOnInit(): void {
+  ) {
     this.formulario = this._formBuilder.group({
       _id:                                [''],
       utilidad_tipo_identificacion_id:    ['', Validators.required],
@@ -50,12 +44,20 @@ export class ActualizarCentroComponent implements OnInit {
       utilidad_ciudad_id:                 ['', Validators.required],
       estado:                             [true],
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((element) => element.unsubscribe());
+  }
+
+  ngOnInit(): void {
+   
     setTimeout(() => {
       this.getListadoTipoIdentificacion();
       this.getListadoDepartamentos();
     }, 0);
    
-    this.formControl().utilidad_departamento_id.valueChanges.subscribe((resp) => {
+    this.formControl()['utilidad_departamento_id'].valueChanges.subscribe((resp) => {
       if (resp) {
         this.getListadoCiudades(resp);
       }
@@ -68,16 +70,16 @@ export class ActualizarCentroComponent implements OnInit {
 
   dataCentroMedico = () => {
     return new CentroMedico(
-    this.formControl().utilidad_tipo_identificacion_id.value,
-    this.formControl().identificacion.value,
-    this.formControl().razon_social.value,
-    this.formControl().utilidad_departamento_id.value,
-    this.formControl().utilidad_ciudad_id.value,
-    this.formControl().direccion.value,
-    this.formControl().telefono.value,
-    this.formControl().descripcion.value,
-    this.formControl().estado.value ? Number(true) : Number(false),
-    this.formControl()._id.value
+    this.formControl()['utilidad_tipo_identificacion_id'].value,
+    this.formControl()['identificacion'].value,
+    this.formControl()['razon_social'].value,
+    this.formControl()['utilidad_departamento_id'].value,
+    this.formControl()['utilidad_ciudad_id'].value,
+    this.formControl()['direccion'].value,
+    this.formControl()['telefono'].value,
+    this.formControl()['descripcion'].value,
+    this.formControl()['estado'].value ? Number(true) : Number(false),
+    this.formControl()['_id'].value
     )
   };
 
@@ -126,7 +128,7 @@ export class ActualizarCentroComponent implements OnInit {
     this.formulario.markAllAsTouched();
     this.formulario.updateValueAndValidity();
     if (this.formulario.valid) {
-      this.subscription.push(this._centrosMedicosService.putCentroMedico(this.dataCentroMedico(), this.formControl()._id.value)
+      this.subscription.push(this._centrosMedicosService.putCentroMedico(this.dataCentroMedico(), this.formControl()['_id'].value)
         .subscribe(() => {
           this._mensaje.mensajeSuccess(
             'Centro médico actualizado exitosamente.'

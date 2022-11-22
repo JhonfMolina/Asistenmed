@@ -23,13 +23,14 @@ import { RegimenesComponent } from './regimenes/regimenes.component';
 import { CentrosImagenesComponent } from './centros-imagenes/centros-imagenes.component';
 import { TipoCitasComponent } from './tipo-citas/tipo-citas.component';
 import { GestionHorarioMedicoComponent } from './gestion-horario-medico/gestion-horario-medico.component';
+import { ServiciosMedicosComponent } from './servicios-medicos/servicios-medicos.component';
 
 
 @NgModule({
   declarations: [
     PacientesComponent,
     MedicosComponent,
-    //ServiciosMedicosComponent,
+    ServiciosMedicosComponent,
     TiposConsultasComponent,
     ConveniosAdministrativosComponent,
     DiagnosticosComponent,

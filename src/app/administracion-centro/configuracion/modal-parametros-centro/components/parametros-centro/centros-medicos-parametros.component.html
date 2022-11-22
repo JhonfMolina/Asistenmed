@@ -44,7 +44,7 @@
             <mat-option value="" selected disabled>Seleccionar</mat-option>
             <mat-option [value]="tipo.id" *ngFor="let tipo of listadoTipoDocumento">{{tipo.nombre}}</mat-option>
           </mat-select>
-          <mat-error *ngIf="this.formControl().asistencial_tipo_documento_historia_id.hasError('required')">Campo tipo documento historia clinica es requerido.</mat-error>
+          <mat-error *ngIf="this.formControl()['asistencial_tipo_documento_historia_id'].hasError('required')">Campo tipo documento historia clinica es requerido.</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-lg-4">
@@ -53,7 +53,7 @@
             <mat-option value="" selected disabled>Seleccionar</mat-option>
             <mat-option [value]="tipo.id" *ngFor="let tipo of listadoTipoDocumento">{{tipo.nombre}}</mat-option>
           </mat-select>
-          <mat-error *ngIf="this.formControl().asistencial_tipo_documento_medicamento_id.hasError('required')">Campo tipo documento medicamentos es requerido.</mat-error>
+          <mat-error *ngIf="this.formControl()['asistencial_tipo_documento_medicamento_id'].hasError('required')">Campo tipo documento medicamentos es requerido.</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-lg-4">
@@ -81,7 +81,7 @@
         </mat-form-field>
 
         <div class="col-lg-4" *ngIf="_botones.botones.btnActualizar">
-          <mat-checkbox formControlName="estado">{{this.formControl().estado.value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
+          <mat-checkbox formControlName="estado">{{this.formControl()['estado'].value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
         </div>
       </form>
     </div>

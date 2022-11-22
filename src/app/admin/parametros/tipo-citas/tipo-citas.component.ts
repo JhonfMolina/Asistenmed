@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
@@ -16,16 +16,16 @@ import { TipoCitasService } from '../service/tipo-citas.service';
 })
 export class TipoCitasComponent implements OnInit {
 
-  public formulario: UntypedFormGroup;
-  public centrosMedicos: Array<any> = [];
-  public listadoTiposIdentificaciones: Array<any> = [];
-  public listadoDepartamentos: Array<any> = [];
-  public listadoCiudades: Array<any> = [];
-  public displayedColumns: string[] = ['descripcion','resolucion', 'reasignacion', 'seleccionar'];
-  public dataSource = new MatTableDataSource();
-  public subscription: Subscription[] = [];
-  public _botones: Botones;
-  public CENTRO_MEDICO = this._auth.getCookieCentroMedico();
+  public formulario:                    FormGroup;
+  public centrosMedicos:                Array<any> = [];
+  public listadoTiposIdentificaciones:  Array<any> = [];
+  public listadoDepartamentos:          Array<any> = [];
+  public listadoCiudades:               Array<any> = [];
+  public displayedColumns:              string[] = ['descripcion','resolucion', 'reasignacion', 'seleccionar'];
+  public dataSource =                   new MatTableDataSource();
+  public subscription:                  Subscription[] = [];
+  public _botones:                      Botones | any;
+  public CENTRO_MEDICO =                this._auth.getCookieCentroMedico();
 
   @ViewChild(MatPaginator, { static: false }) set paginator(
     value: MatPaginator
@@ -40,13 +40,7 @@ export class TipoCitasComponent implements OnInit {
     public _mensaje: NotificationService,
     public _tipoCitasService: TipoCitasService,
     public _auth: AuthService,
-  ) {}
-
-  ngOnDestroy(): void {
-    this.subscription.forEach((element) => element.unsubscribe());
-  }
-
-  ngOnInit(): void {
+  ) {
     this.formulario = this._formBuilder.group({
       _id:                        [''],
       nombre:                     ['', Validators.required],
@@ -54,6 +48,14 @@ export class TipoCitasComponent implements OnInit {
       reasignacion:               [''],
       estado:                     [false],
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((element) => element.unsubscribe());
+  }
+
+  ngOnInit(): void {
+   
     this.subscription.push(
       this._tipoCitasService.refresh.subscribe(() => this.getListadoTipoCitas())
     );
@@ -68,11 +70,11 @@ export class TipoCitasComponent implements OnInit {
   dataTipoCitas = () => {
     return new TipoCita(
     this.CENTRO_MEDICO.id,
-    this.formControl().nombre.value,
-    this.formControl().resolucion.value,
-    this.formControl().reasignacion.value? Number(true): Number(false),
-    this.formControl().estado.value? Number(true): Number(false),
-    this.formControl()._id.value
+    this.formControl()['nombre'].value,
+    this.formControl()['resolucion'].value,
+    this.formControl()['reasignacion'].value? Number(true): Number(false),
+    this.formControl()['estado'].value? Number(true): Number(false),
+    this.formControl()['_id'].value
     )
   };
 
@@ -121,7 +123,7 @@ export class TipoCitasComponent implements OnInit {
 
   putTipoCitas() {    
     if (this.formulario.valid) {
-      this.subscription.push(this._tipoCitasService.putTipoCitas(this.dataTipoCitas(), this.formControl()._id.value).subscribe((resp) => {
+      this.subscription.push(this._tipoCitasService.putTipoCitas(this.dataTipoCitas(), this.formControl()['_id'].value).subscribe((resp) => {
         this.formulario.reset();
         this._mensaje.mensajeSuccess('Tipo cita actualizado exitosamente.');
         this._botones.ctaInicial();

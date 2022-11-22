@@ -55,7 +55,7 @@
           >
         </mat-select>
         <mat-error
-          *ngIf="this.formControl().utilidad_tipo_identificacion_id.hasError('required')"
+          *ngIf="this.formControl()['utilidad_tipo_identificacion_id'].hasError('required')"
           >Campo tipo de doc. es requerido.</mat-error
         >
       </mat-form-field>
@@ -68,7 +68,7 @@
         />
         <mat-icon matSuffix>numbers</mat-icon>
         <mat-error
-          *ngIf="this.formControl().numero_identificacion.hasError('required')"
+          *ngIf="this.formControl()['numero_identificacion'].hasError('required')"
           >Campo numero de ident. es requerido.</mat-error
         >
       </mat-form-field>
@@ -80,7 +80,7 @@
           formControlName="primer_nombre"
         />
         <mat-icon matSuffix>person</mat-icon>
-        <mat-error *ngIf="this.formControl().primer_nombre.hasError('required')"
+        <mat-error *ngIf="this.formControl()['primer_nombre'].hasError('required')"
           >Campo primer nombre es requerido.</mat-error
         >
       </mat-form-field>
@@ -93,7 +93,7 @@
         />
         <mat-icon matSuffix>person</mat-icon>
         <mat-error
-          *ngIf="this.formControl().segundo_nombre.hasError('required')"
+          *ngIf="this.formControl()['segundo_nombre'].hasError('required')"
           >Campo segundo nombre es requerido.</mat-error
         >
       </mat-form-field>
@@ -106,7 +106,7 @@
         />
         <mat-icon matSuffix>person</mat-icon>
         <mat-error
-          *ngIf="this.formControl().primer_apellido.hasError('required')"
+          *ngIf="this.formControl()['primer_apellido'].hasError('required')"
           >Campo primer apellido es requerido.</mat-error
         >
       </mat-form-field>
@@ -119,7 +119,7 @@
         />
         <mat-icon matSuffix>person</mat-icon>
         <mat-error
-          *ngIf="this.formControl().segundo_apellido.hasError('required')"
+          *ngIf="this.formControl()['segundo_apellido'].hasError('required')"
           >Campo segundo apellido es requerido.</mat-error
         >
       </mat-form-field>
@@ -133,7 +133,7 @@
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
         <mat-error
-          *ngIf="this.formControl().fecha_nacimiento.hasError('required')"
+          *ngIf="this.formControl()['fecha_nacimiento'].hasError('required')"
           >Campo fecha de nac. es requerido.</mat-error
         >
       </mat-form-field>
@@ -141,18 +141,18 @@
         <mat-label>Sexo</mat-label>
         <mat-select formControlName="sexo">
           <mat-select-trigger>
-            {{formControl().sexo.value}}
+            {{formControl()['sexo'].value}}
           </mat-select-trigger>
           <mat-option value="M"><mat-icon>boy</mat-icon>Masculino</mat-option>
           <mat-option value="F"><mat-icon>girl</mat-icon>Femenino</mat-option>
         </mat-select>
-        <mat-error *ngIf="this.formControl().sexo.hasError('required')">Campo sexo es requerido.</mat-error>
+        <mat-error *ngIf="this.formControl()['sexo'].hasError('required')">Campo sexo es requerido.</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" class="col-lg-3">
         <mat-label>Dirección</mat-label>
         <input matInput placeholder="Escribir..." formControlName="direccion" />
         <mat-icon matSuffix>fmd_good</mat-icon>
-        <mat-error *ngIf="this.formControl().direccion.hasError('required')"
+        <mat-error *ngIf="this.formControl()['direccion'].hasError('required')"
           >Campo dirección es requerido.</mat-error
         >
       </mat-form-field>
@@ -160,7 +160,7 @@
         <mat-label>Telefono</mat-label>
         <input matInput placeholder="Escribir..." formControlName="telefono" />
         <mat-icon matSuffix>phone</mat-icon>
-        <mat-error *ngIf="this.formControl().telefono.hasError('required')"
+        <mat-error *ngIf="this.formControl()['telefono'].hasError('required')"
           >Campo telefono es requerido.</mat-error
         >
       </mat-form-field>
@@ -168,7 +168,7 @@
         <mat-label>Correo Electrónico</mat-label>
         <input matInput placeholder="Escribir..." formControlName="correo" />
         <mat-icon matSuffix>mail_outline</mat-icon>
-        <mat-error *ngIf="this.formControl().correo.hasError('required')"
+        <mat-error *ngIf="this.formControl()['correo'].hasError('required')"
           >Campo correo es requerido.</mat-error
         >
       </mat-form-field>
@@ -183,7 +183,7 @@
           >
         </mat-select>
         <mat-error
-          *ngIf="this.formControl().departamento_id.hasError('required')"
+          *ngIf="this.formControl()['departamento_id'].hasError('required')"
           >Campo departamento es requerido.</mat-error
         >
       </mat-form-field>
@@ -197,7 +197,7 @@
             >{{ ciudades.nombre }}</mat-option
           >
         </mat-select>
-        <mat-error *ngIf="this.formControl().ciudad_id.hasError('required')"
+        <mat-error *ngIf="this.formControl()['ciudad_id'].hasError('required')"
           >Campo ciudad es requerido.</mat-error
         >
       </mat-form-field>
@@ -205,19 +205,19 @@
         <mat-label>Universidad</mat-label>
         <input matInput placeholder="Escribir..." formControlName="universidad" />
         <mat-icon matSuffix>school</mat-icon>
-        <mat-error *ngIf="this.formControl().universidad.hasError('required')">Campo universidad es requerido.</mat-error>
+        <mat-error *ngIf="this.formControl()['universidad'].hasError('required')">Campo universidad es requerido.</mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" class="col-lg-3">
         <mat-label>Tarjeta Profesional</mat-label>
         <input matInput placeholder="Escribir..." formControlName="rethus" />
         <mat-icon matSuffix>pin</mat-icon>
-        <mat-error *ngIf="this.formControl().rethus.hasError('required')">Campo tarjeta profesional es requerido.</mat-error>
+        <mat-error *ngIf="this.formControl()['rethus'].hasError('required')">Campo tarjeta profesional es requerido.</mat-error>
       </mat-form-field>
 
       <div class="col-lg-9">
         <mat-form-field class="example-chip-list" appearance="outline">
           <mat-label>Especialidades</mat-label>
-          <mat-chip-list #chipList>
+          <mat-chip-grid #chipGrid>
             <mat-chip color="primary" selected class="text-white" *ngFor="let especialidad of listadoEspecialidades" (removed)="remove(especialidad)">
               {{especialidad}}
               <button type="button" mat-button>
@@ -225,22 +225,22 @@
               </button>
             </mat-chip>
             <input placeholder="Nueva especialidad..."
-                   [matChipInputFor]="chipList"
+                   [matChipInputFor]="chipGrid"
                    [matChipInputAddOnBlur]="addOnBlur"
                    (matChipInputTokenEnd)="add($event)">
-          </mat-chip-list>
+          </mat-chip-grid>
         </mat-form-field>        
       </div>
 
       <div class="col-lg-3" *ngIf="_botones.botones.btnActualizar">
-        <mat-checkbox formControlName="estado">{{this.formControl().estado.value ? 'Deshabilitar registro' : ' Habilitar Registro'}}</mat-checkbox>
+        <mat-checkbox formControlName="estado">{{this.formControl()['estado'].value ? 'Deshabilitar registro' : ' Habilitar Registro'}}</mat-checkbox>
       </div>
     </form>
   </div>
 </div>
 
 <div class="contenedor-tabla" *ngIf="dataSource.data.length > 0">
-  <mat-form-field appearance="standard">
+  <mat-form-field appearance="outline">
     <mat-label>Buscar medico</mat-label>
     <input
       matInput

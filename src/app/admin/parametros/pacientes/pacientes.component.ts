@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
@@ -19,22 +19,22 @@ import { AuthService } from 'src/app/client/auth/service/auth.service';
 })
 export class PacientesComponent implements OnInit, OnDestroy {
 
-  public identificador: string = '';
-  public formulario: UntypedFormGroup;
+  public identificador:             string = '';
+  public formulario:                FormGroup;
   public listadoTipoIdentificacion: Array<any> = [];
-  public listadoDepartamentos: Array<any> = [];
-  public listadoCiudades: Array<any> = [];
-  public listadoConvenios: Array<any> = [];
-  public displayedColumns: string[] = [
+  public listadoDepartamentos:      Array<any> = [];
+  public listadoCiudades:           Array<any> = [];
+  public listadoConvenios:          Array<any> = [];
+  public displayedColumns:          string[] = [
     'documento',
     'nombre',
     'correo',
     'seleccionar',
   ];
-  public dataSource = new MatTableDataSource();
-  public subscription: Subscription[] = [];
-  public _botones: Botones;
-  public CENTRO_MEDICO = this._auth.getCookieCentroMedico();
+  public dataSource =               new MatTableDataSource();
+  public subscription:              Subscription[] = [];
+  public _botones:                  Botones | any;
+  public CENTRO_MEDICO =            this._auth.getCookieCentroMedico();
 
   @ViewChild(MatPaginator, { static: false }) set paginator(
     value: MatPaginator
@@ -52,13 +52,7 @@ export class PacientesComponent implements OnInit, OnDestroy {
     public _departamentoService: DepartamentosService,
     public _ciudadesService: CiudadesService,
     public _auth: AuthService,
-  ) {}
-
-  ngOnDestroy(): void {
-    this.subscription.forEach((element) => element.unsubscribe());
-  }
-
-  ngOnInit(): void {
+  ) {
     this.formulario = this._formBuilder.group({
       _id:                    [''],
       utilidad_tipo_identificacion_id:  ['', Validators.required],
@@ -80,13 +74,21 @@ export class PacientesComponent implements OnInit, OnDestroy {
       factor_sanguineo:       [''],
       estado:                 [false],
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach((element) => element.unsubscribe());
+  }
+
+  ngOnInit(): void {
+   
     this.subscription.push(
       this._pacientesService.refresh.subscribe(() => this.getListadoPacientes())
     );
     this._botones = new Botones();
     this._botones.ctaInicial();
     this.inicializador();
-    this.formControl().departamento_id.valueChanges.subscribe((resp) => {
+    this.formControl()['departamento_id'].valueChanges.subscribe((resp) => {
       if (resp) {
         this.getListadoCiudadesPorDepartamento(resp);
       }
@@ -100,25 +102,25 @@ export class PacientesComponent implements OnInit, OnDestroy {
   dataPaciente = () => {
     return new Paciente(
       this.CENTRO_MEDICO.id,
-      this.formControl().utilidad_tipo_identificacion_id.value,
-      this.formControl().numero_identificacion.value,
-      this.formControl().primer_nombre.value,
-      this.formControl().primer_apellido.value,
-      this.formControl().fecha_nacimiento.value,
-      this.formControl().sexo.value,
-      this.formControl().departamento_id.value,
-      this.formControl().ciudad_id.value,
-      this.formControl().barrio.value,
-      this.formControl().direccion.value,
-      this.formControl().telefono.value,
-      this.formControl().segundo_nombre.value,
-      this.formControl().segundo_apellido.value,
-      this.formControl().estado_civil.value,
-      this.formControl().grupo_sanguineo.value,
-      this.formControl().factor_sanguineo.value,
-      this.formControl().correo.value,
+      this.formControl()['utilidad_tipo_identificacion_id'].value,
+      this.formControl()['numero_identificacion'].value,
+      this.formControl()['primer_nombre'].value,
+      this.formControl()['primer_apellido'].value,
+      this.formControl()['fecha_nacimiento'].value,
+      this.formControl()['sexo'].value,
+      this.formControl()['departamento_id'].value,
+      this.formControl()['ciudad_id'].value,
+      this.formControl()['barrio'].value,
+      this.formControl()['direccion'].value,
+      this.formControl()['telefono'].value,
+      this.formControl()['segundo_nombre'].value,
+      this.formControl()['segundo_apellido'].value,
+      this.formControl()['estado_civil'].value,
+      this.formControl()['grupo_sanguineo'].value,
+      this.formControl()['factor_sanguineo'].value,
+      this.formControl()['correo'].value,
       'activo', //this.formControl().estado.value ? Number(true) : Number(false),
-      this.formControl()._id.value
+      this.formControl()['_id'].value
     )
   };
 
@@ -218,7 +220,7 @@ export class PacientesComponent implements OnInit, OnDestroy {
     if (this.formulario.valid) {
       this.subscription.push(
         this._pacientesService
-          .putPaciente(this.dataPaciente(), this.formControl()._id.value)
+          .putPaciente(this.dataPaciente(), this.formControl()['_id'].value)
           .subscribe(() => {
             this.formulario.reset();
             this._mensaje.mensajeSuccess('Paciente actualizada exitosamente.'); 

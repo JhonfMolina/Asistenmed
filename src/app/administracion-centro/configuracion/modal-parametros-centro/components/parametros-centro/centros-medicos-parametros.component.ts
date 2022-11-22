@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CentrosMedicosParametrosService } from 'src/app/administracion-centro/service/centros-medicos-parametros.service';
 import { TiposDocumentosService } from 'src/app/administracion-centro/service/tipos-documentos.service';
@@ -16,12 +16,12 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class CentrosMedicosParametrosComponent implements OnInit, OnDestroy {
 
-  public formulario: UntypedFormGroup;
-  public _botones: Botones;
+  public formulario:                      FormGroup;
+  public _botones:                        Botones | any;
   public minutosAtencion:                 number[] = [15, 20, 30, 45, 60];
-  public _centroMedicoParametro:          CentroMedicoParametro;
+  public _centroMedicoParametro:          CentroMedicoParametro | any;;
   public listadoTipoDocumento:            Array<any> = [];
-  @Input()                                centro_medico:CentroMedico;
+  @Input()                                centro_medico:CentroMedico | any;;
 
   public subscription: Subscription[] = [];
   
@@ -30,18 +30,20 @@ export class CentrosMedicosParametrosComponent implements OnInit, OnDestroy {
     public _centroMedicoParametroService: CentrosMedicosParametrosService,
     public _mensaje: NotificationService,
     public _tiposDocumentosService: TiposDocumentosService,
-    ) { }
+    ) { 
+      this.formulario = this._formBuilder.group({
+        _id:                                                  [''],
+        asistencial_tipo_documento_historia_id:               ['', Validators.required],
+        asistencial_tipo_documento_medicamento_id:            ['', Validators.required],
+        asistencial_tipo_documento_imagenologia_id:           [''],
+        asistencial_tipo_documento_laboratorio_id:            [''],
+        duracion_cita:                                        ['', Validators.required],
+        estado:                                               [''],
+      });
+    }
 
   ngOnInit(): void {
-    this.formulario = this._formBuilder.group({
-      _id:                                                  [''],
-      asistencial_tipo_documento_historia_id:               ['', Validators.required],
-      asistencial_tipo_documento_medicamento_id:            ['', Validators.required],
-      asistencial_tipo_documento_imagenologia_id:           [''],
-      asistencial_tipo_documento_laboratorio_id:            [''],
-      duracion_cita:                                        ['', Validators.required],
-      estado:                                               [''],
-    });
+    
     this._botones = new Botones();
     this._botones.ctaInicial();
     this.inicializador()
@@ -59,13 +61,13 @@ export class CentrosMedicosParametrosComponent implements OnInit, OnDestroy {
   dataCentroMedicoParametro = () => {
     return new CentroMedicoParametro(
       this.centro_medico.id!,
-      this.formControl().duracion_cita.value,
-      this.formControl().asistencial_tipo_documento_historia_id.value,
-      this.formControl().asistencial_tipo_documento_medicamento_id.value,
-      this.formControl().asistencial_tipo_documento_imagenologia_id.value,
-      this.formControl().asistencial_tipo_documento_laboratorio_id.value,
-      this.formControl().estado.value? Number(true): Number(false),
-      this.formControl()._id.value,
+      this.formControl()['duracion_cita'].value,
+      this.formControl()['asistencial_tipo_documento_historia_id'].value,
+      this.formControl()['asistencial_tipo_documento_medicamento_id'].value,
+      this.formControl()['asistencial_tipo_documento_imagenologia_id'].value,
+      this.formControl()['asistencial_tipo_documento_laboratorio_id'].value,
+      this.formControl()['estado'].value? Number(true): Number(false),
+      this.formControl()['_id'].value,
     )
   };
 
@@ -120,10 +122,8 @@ export class CentrosMedicosParametrosComponent implements OnInit, OnDestroy {
   }
 
   putCentroMedicoParametro() { 
-    console.log('put',this.dataCentroMedicoParametro());
-      
     if (this.formulario.valid) {
-      this.subscription.push(this._centroMedicoParametroService.putParametroCentroMedico(this.dataCentroMedicoParametro(), this.formControl()._id.value).subscribe(() => {
+      this.subscription.push(this._centroMedicoParametroService.putParametroCentroMedico(this.dataCentroMedicoParametro(), this.formControl()['_id'].value).subscribe(() => {
         this._mensaje.mensajeSuccess('Parametro de centro medico actualizado exitosamente.');
       }));
     } else {

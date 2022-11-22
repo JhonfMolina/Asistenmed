@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subscription } from 'rxjs';
@@ -16,13 +16,13 @@ import { ViasIngresoService } from '../service/vias-ingreso.service';
 })
 export class ViasIngresosComponent implements OnInit, OnDestroy {
 
-  public formulario: UntypedFormGroup;
-  public displayedColumns: string[] = ['nombre', 'seleccionar'];
-  public dataSource = new MatTableDataSource();
-  public listadoCentrosMedicos:Array<any> = [];
-  public subscription: Subscription[] = [];
-  public _botones: Botones;
-  public CENTRO_MEDICO = this._auth.getCookieCentroMedico()
+  public formulario:            FormGroup;
+  public displayedColumns:      string[] = ['nombre', 'seleccionar'];
+  public dataSource =           new MatTableDataSource();
+  public listadoCentrosMedicos: Array<any> = [];
+  public subscription:          Subscription[] = [];
+  public _botones:              Botones | any;
+  public CENTRO_MEDICO =        this._auth.getCookieCentroMedico()
 
   @ViewChild(MatPaginator, { static: false }) set paginator(
     value: MatPaginator
@@ -38,18 +38,19 @@ export class ViasIngresosComponent implements OnInit, OnDestroy {
     public _viasIngresoService: ViasIngresoService,
     public _mensaje: NotificationService,
     public _auth: AuthService,
-  ) {}
+  ) {
+    this.formulario = this._formBuilder.group({
+      _id:                      [''],
+      nombre:                   ['', Validators.required],
+      estado:                   [false],
+    });
+  }
 
   ngOnDestroy(): void {
     this.subscription.forEach((element) => element.unsubscribe());
   }
 
   ngOnInit(): void {
-    this.formulario = this._formBuilder.group({
-      _id:                      [''],
-      nombre:                   ['', Validators.required],
-      estado:                   [false],
-    });
     this.subscription.push(
       this._viasIngresoService.refresh.subscribe(() => this.getListadoViasIngreso())
     );
@@ -64,9 +65,9 @@ export class ViasIngresosComponent implements OnInit, OnDestroy {
   dataViasIngreso = () => {
     return new ViaIngreso(
       this.CENTRO_MEDICO.id,
-      this.formControl().nombre.value,
-      this.formControl().estado.value? Number(true): Number(false),
-      this.formControl()._id.value
+      this.formControl()['nombre'].value,
+      this.formControl()['estado'].value? Number(true): Number(false),
+      this.formControl()['_id'].value
     )
   }
 
@@ -112,7 +113,7 @@ export class ViasIngresosComponent implements OnInit, OnDestroy {
 
   putViasIngreso() {    
     if (this.formulario.valid) {
-      this.subscription.push(this._viasIngresoService.putViasIngreso(this.dataViasIngreso(), this.formControl()._id.value).subscribe(() => {
+      this.subscription.push(this._viasIngresoService.putViasIngreso(this.dataViasIngreso(), this.formControl()['_id'].value).subscribe(() => {
         this.formulario.reset();
         this._mensaje.mensajeSuccess('Via de ingreso actualizada exitosamente.');
         this._botones.ctaInicial();

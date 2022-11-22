@@ -57,14 +57,14 @@
               <mat-label>Descripción</mat-label>
               <input matInput placeholder="Escribir..." formControlName="nombre" required/>
               <mat-icon matSuffix>diversity_2</mat-icon>
-              <mat-error *ngIf="this.formControl().nombre.hasError('required')">Campo nombre es requerido.</mat-error>
+              <mat-error *ngIf="this.formControl()['nombre'].hasError('required')">Campo nombre es requerido.</mat-error>
             </mat-form-field>
     
             <mat-form-field appearance="outline" class="col-lg-3">
               <mat-label>Código Resolución</mat-label>
               <input matInput placeholder="Escribir..." formControlName="resolucion"/>
               <mat-icon matSuffix>numbers</mat-icon>
-              <mat-error *ngIf="this.formControl().resolucion.hasError('required')">Campo código resolución es requerido.</mat-error>
+              <mat-error *ngIf="this.formControl()['resolucion'].hasError('required')">Campo código resolución es requerido.</mat-error>
             </mat-form-field>
     
             <div class="col-lg-3">
@@ -72,14 +72,14 @@
             </div>
     
             <div class="col-lg-3" *ngIf="_botones.botones.btnActualizar">
-              <mat-checkbox formControlName="estado">{{this.formControl().estado.value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
+              <mat-checkbox formControlName="estado">{{this.formControl()['estado'].value ? 'Deshabilitar registro' : ' Registro habilitado'}}</mat-checkbox>
             </div>
           </form>
     </div>
 </div>
 
 <div class="contenedor-tabla" *ngIf="dataSource.data.length > 0">
-    <mat-form-field appearance="standard">
+    <mat-form-field appearance="outline">
       <mat-label>Buscar tipo cita</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar" #input>
     </mat-form-field>
