@@ -19,6 +19,7 @@ export class SidebarComponent implements OnInit {
         { path: '/admin/parametros/medicos', title: 'Medicos',  icon: 'medication' },
         { path: '/admin/parametros/categorias-diagnosticos', title: 'Categorias Diagnosticos',  icon:'category' },
         { path: '/admin/parametros/diagnosticos', title: 'Diagnosticos',  icon:'content_paste' },
+        { path: '/admin/parametros/CUPS', title: 'CUPS',  icon:'closed_caption_off' },
         { path: '/admin/parametros/convenios-administrativos', title: 'Convenios / EPS',  icon:'handshake' },
         { path: '/admin/parametros/regimenes', title: 'Regimenes',  icon:'bubble_chart' },
         { path: '/admin/parametros/farmacias', title: 'Farmacias',  icon:'medical_services' },

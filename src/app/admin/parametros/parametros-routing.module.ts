@@ -17,6 +17,7 @@ import { RegimenesComponent } from './regimenes/regimenes.component';
 import { CentrosImagenesComponent } from './centros-imagenes/centros-imagenes.component';
 import { TipoCitasComponent } from './tipo-citas/tipo-citas.component';
 import { GestionHorarioMedicoComponent } from './gestion-horario-medico/gestion-horario-medico.component';
+import { CodigosCupsComponent } from './codigos-cups/codigos-cups.component';
 
 const routes: Routes = [
   {path:'vias-ingreso', component: ViasIngresosComponent, data:{ title:'AsistenMed | Vias de Ingreso' }},
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path:'gestion-horario-medico', component: GestionHorarioMedicoComponent, data:{ title:'AsistenMed | Gestión horarios Medicos' }},
   {path:'categorias-diagnosticos', component: CategoriasDiagnosticosComponent, data:{ title:'AsistenMed | Categorias Diagnosticos' }},
   {path:'diagnosticos', component: DiagnosticosComponent, data:{ title:'AsistenMed | Diagnosticos' }},
+  {path:'CUPS', component: CodigosCupsComponent, data:{ title:'AsistenMed | Códicos CUPS' }},
   {path:'convenios-administrativos', component: ConveniosAdministrativosComponent, data:{ title:'AsistenMed | Convenios Administrativos' }},
   {path:'farmacias', component: FarmaciasComponent, data:{ title:'AsistenMed | Farmacias' }},
   {path:'laboratorios', component: LaboratoriosComponent, data:{ title:'AsistenMed | Laboratorios' }},

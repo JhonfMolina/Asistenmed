@@ -37,10 +37,7 @@ mat-form-field {
   width: 100%;
 }
 
-.mat-raised-button.mat-primary,
-.mat-raised-button.mat-warn,
-.mat-mini-fab.mat-primary,
-.mat-mini-fab.mat-warn {
+.mat-mdc-fab.mat-primary, .mat-mdc-mini-fab.mat-primary {
   color: #fff !important;
 }
 

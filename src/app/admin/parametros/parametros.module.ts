@@ -24,6 +24,7 @@ import { CentrosImagenesComponent } from './centros-imagenes/centros-imagenes.co
 import { TipoCitasComponent } from './tipo-citas/tipo-citas.component';
 import { GestionHorarioMedicoComponent } from './gestion-horario-medico/gestion-horario-medico.component';
 import { ServiciosMedicosComponent } from './servicios-medicos/servicios-medicos.component';
+import { CodigosCupsComponent } from './codigos-cups/codigos-cups.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { ServiciosMedicosComponent } from './servicios-medicos/servicios-medicos
     RegimenesComponent,
     CentrosImagenesComponent,
     TipoCitasComponent,
-    GestionHorarioMedicoComponent
+    GestionHorarioMedicoComponent,
+    CodigosCupsComponent
   ],
   imports: [
     CommonModule,
