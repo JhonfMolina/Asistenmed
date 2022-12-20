@@ -4,8 +4,7 @@ import { Subscription } from 'rxjs';
 import * as moment from 'moment';
 import { AuthService } from 'src/app/client/auth/service/auth.service';
 import { Botones } from 'src/app/helpers/btn-accion';
-import { DetalleOrdenMedica } from 'src/app/models/consultas/detalle-orden-medica.model';
-import { OrdenMedica } from 'src/app/models/consultas/orden-medica.model';
+import { DetalleOrdenMedica } from 'src/app/models/movimientos/detalle-orden-medica.model';
 import { TipoDocumento } from 'src/app/models/parametros/tipo-documento.model';
 import { NotificationService } from 'src/app/services/notification.service';
 import { MedicamentosService } from '../../parametros/service/medicamentos.service';
@@ -19,6 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { HistoriaClinicaService } from '../service/historia-clinica.service';
 import { EvolucionesService } from '../service/evoluciones.service';
 import { FarmaciasService } from '../../parametros/service/farmacias.service';
+import { OrdenMedica } from 'src/app/models/movimientos/orden-medica.model';
 
 @Component({
   selector: 'app-orden-medica-farmacia',

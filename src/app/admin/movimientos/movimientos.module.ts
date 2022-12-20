@@ -13,6 +13,7 @@ import { EvolucionMedicaComponent } from './evolucion-medica/evolucion-medica.co
 import { AgendaMedicaComponent } from './agenda-medica/agenda-medica.component';
 import { CitasComponent } from './citas/citas.component';
 import { CitasModule } from './citas/citas.module';
+import { ConsultaMedicaComponent } from './consulta-medica/consulta-medica.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { CitasModule } from './citas/citas.module';
     OrdenMedicaFarmaciaComponent,
     EvolucionMedicaComponent,
     AgendaMedicaComponent,
-    CitasComponent
+    CitasComponent,
+    ConsultaMedicaComponent
   ],
   imports: [
     CommonModule,

@@ -40,8 +40,9 @@ export class SidebarComponent implements OnInit {
       menuItems : [
         // { path: '/admin/movimientos/agenda-medica', title: 'Agenda Medica',  icon: 'view_agenda' },
         // { path: '/admin/movimientos/citas', title: 'Citas Medicas',  icon: 'groups_2' },
+        { path: '/admin/movimientos/consulta-medica', title: 'Consulta Medica',  icon: 'view_agenda' },
+        { path: '/admin/movimientos/evolucion-medica', title: 'Ejecución de Consulta',  icon: 'contact_page' },
         { path: '/admin/movimientos/historia-clinica', title: 'Historia Clinica',  icon: 'history_edu' },
-        { path: '/admin/movimientos/evolucion-medica', title: 'Evolución Medica',  icon: 'contact_page' },
         { path: '/admin/movimientos/orden-medica', title: 'Orden Medica',  icon: 'grading' },
       ]  
     },

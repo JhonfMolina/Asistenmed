@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -7,7 +7,7 @@ import { CentrosMedicosParametrosService } from 'src/app/administracion-centro/s
 import { TiposDocumentosService } from 'src/app/administracion-centro/service/tipos-documentos.service';
 import { AuthService } from 'src/app/client/auth/service/auth.service';
 import { Botones } from 'src/app/helpers/btn-accion';
-import { Evolucion, HistoriaClinica } from 'src/app/models/consultas/historia-clinica.model';
+import { Evolucion, HistoriaClinica } from 'src/app/models/movimientos/historia-clinica.model';
 import { CentroMedicoParametro } from 'src/app/models/parametros/centro-medico-parametro.model';
 import { Convenio } from 'src/app/models/parametros/convenio.model';
 import { Paciente } from 'src/app/models/parametros/paciente.model';
@@ -45,7 +45,7 @@ export class HistoriaClinicaComponent implements OnInit , OnDestroy{
     public _regimenesService:             RegimenesService,
     public _pacientesService:             PacientesService,
     public _historiaClinicaService:       HistoriaClinicaService,
-    public _formBuilder:                  UntypedFormBuilder,
+    public _formBuilder:                  FormBuilder,
     public _mensaje:                      NotificationService,
     public _centroMedicoParametroService: CentrosMedicosParametrosService,
     public _tiposDocumentosService:       TiposDocumentosService,
@@ -70,7 +70,6 @@ export class HistoriaClinicaComponent implements OnInit , OnDestroy{
   }
 
   ngOnInit(): void {
-   
     setTimeout(() => {
       this.getCentroMedicoParametro();
     });

@@ -19,7 +19,7 @@ export class CentrosMedicosParametrosService {
     return this._refresh;
   }
 
-  getParametroCentroMedico(centro: any) {
+  getParametroCentroMedico(centro: string) {
     const URL = this.url + `asistencial/centros-medicos/${centro}/parametros`;
     return this._http.get<Response>(URL)
   }

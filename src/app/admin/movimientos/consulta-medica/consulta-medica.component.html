@@ -1,0 +1,116 @@
+<div class="card shadow-sm animate__animated animate__fadeInTopLeft">
+  <div
+    class="card-header bg-primary bg-gradient text-white d-flex justify-content-between align-items-center"
+  >
+    CONSULTA MEDICA
+    <div class="btn-group">
+        <button
+        mat-mini-fab
+        color="primary"
+        (click)="postConsultaMedica()"
+        matTooltip="Guardar información"
+        matTooltipPosition="above"
+       [disabled]="this.formulario.invalid"
+      >
+        <mat-icon>save</mat-icon>
+      </button>
+      <button
+        mat-mini-fab
+        color="warn"
+        (click)="limpiarVista()"
+        matTooltip="Limpiar vista"
+        matTooltipPosition="above"
+      >
+        <mat-icon>clear</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="formulario">
+      <div class="row align-items-center">
+        <div class="col-lg-3">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Fecha</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="fecha" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="this.formControl()['fecha'].hasError('required')"
+              >Campo fecha es requerido.</mat-error
+            >
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="col-lg-3">
+          <mat-label>Hora</mat-label>
+          <input
+            matInput
+            type="time"
+            placeholder="00:00"
+            formControlName="hora"
+            required
+          />
+          <mat-icon matSuffix>schedule</mat-icon>
+          <mat-error *ngIf="this.formControl()['hora'].hasError('required')"
+            >Campo hora es requerido.</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-lg-6">
+          <mat-label>Nombre del Paciente</mat-label>
+          <input
+            matInput
+            placeholder="Buscar..."
+            formControlName="nombre_paciente"
+            readonly
+            required
+            (click)="modalPacientes()"
+          />
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error
+            *ngIf="
+              this.formControl()['nombre_paciente'].hasError('required')
+            "
+            >Campo paciente es requerido.</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-lg-9">
+          <mat-label>Nombre del Medico</mat-label>
+          <input
+            matInput
+            placeholder="Buscar..."
+            formControlName="asistencial_medico"
+            readonly
+            required
+            (click)="modalMedico()"
+          />
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error
+            *ngIf="
+              this.formControl()['asistencial_medico'].hasError(
+                'required'
+              )
+            "
+            >Campo medico es requerido.</mat-error
+          >
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-lg-3">
+          <mat-label>Valor de la Consulta</mat-label>
+          <input matInput placeholder="$0.00" formControlName="valor" />
+          <mat-icon matSuffix>attach_money</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-lg-12">
+          <mat-label>Observación</mat-label>
+          <textarea matInput formControlName="observacion"></textarea>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+</div>

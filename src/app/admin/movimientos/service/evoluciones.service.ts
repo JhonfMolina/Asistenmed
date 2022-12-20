@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Evolucion, HistoriaClinica } from 'src/app/models/consultas/historia-clinica.model';
+import { Evolucion } from 'src/app/models/movimientos/historia-clinica.model';
 import { environment } from 'src/environments/environment';
 import { Response } from '../../../models/response.model';
 

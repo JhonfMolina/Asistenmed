@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HistoriaClinica } from 'src/app/models/consultas/historia-clinica.model';
+import { HistoriaClinica } from 'src/app/models/movimientos/historia-clinica.model';
 import { environment } from 'src/environments/environment';
 import { Response } from '../../../models/response.model';
 
@@ -17,7 +17,7 @@ export class HistoriaClinicaService {
     return this._http.get<Response>(URL)
   }
 
-  getListadoConsecutivosHistoria(id_centro: string, id_paciente: string) {
+  getListadoConsecutivosHistoria(id_centro: number, id_paciente: number) {
     const URL = this.url + `asistencial/historia-clinicas/pacientes?asistencial_centro_medico_id=${id_centro}&asistencial_paciente_id=${id_paciente}`;
     return this._http.get<Response>(URL)
   }
